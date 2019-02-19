@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <title>Questionnaire</title>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}">
+
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/style.css"
+          th:href="@{/css/style.css}">
+</head>
+
+<body>
+<header>
+<!--
+    bar de navigation avec coleur par default
+-->
+    <div class="navbar navbar-default">
+<!--        menu fluid-->
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/forms/questions}">Visualisez les questions</a></li>
+                <li><a th:href="@{/forms/formQuestion}">Ajouter les questions</a></li>
+                <li>
+                    <a th:href="@{/forms/logout}" th:inline="text">
+                        [[${#httpServletRequest.remoteUser}]]
+                    </a></li>
+            </ul>
+        </div>
+
+    </div>
+</header>
+<section layout:fragment="content">
+
+</section>
+<footer class="navbar-fixed-bottom">
+    <hr/>
+    <div class="container">
+        <small>
+            copyright Zenika @2019
+        </small>
+    </div>
+
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorator="layoutQuestions">
+<head>
+    <title>Questions</title>
+    <link rel="stylesheet" type="text/css"
+     href="../static/css/bootstrap.min.css"
+    th:href="@{/css/bootstrap.min.css}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p></p>
+<div layout:fragment="content">
+    <div class="container" >
+    <form th:action="@{/forms/questions}" method="get">
+        <label>mot clé</label>
+        <input type="text" name="mc" th:value="${motCle}"/>
+        <button class="btn btn-primary">chercher</button>
+    </form>
+</div>
+<div class="container">
+<h2>Questions</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Question</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="contenu:${questions}">
+            <td th:text="${contenu.id}"></td>
+            <td th:text="${contenu.contenu}"></td>
+            <td><a
+            th:href="@{/forms/question/edit(id=${contenu.id})}">edit
+                question
+            </a></td>
+            <td>
+                <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette contenu ?')"
+                        th:href="@{/forms/question/delete(id=${contenu.getId()},page=${pageCourant},
+                size=${size},mc=${motCle})}">
+                    Delete
+                </a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="container">
+<ul class="nav nav-pills" >
+    <li th:class="${pageCourant}==${status.index} ? 'active':''"
+        th:each="page,status:${allPages}">
+    <a th:href="@{/forms/questions(page=${status.index},size=${size},mc=${motCle})}"
+       th:text="${status.index}"></a>
+    </li>
+</ul>
+</div>
+</div>
+</body>
+</html>

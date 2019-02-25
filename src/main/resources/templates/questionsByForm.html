@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="layoutAllQuestions">
+      layout:decorator="layoutQuestionsByForm">
 <head>
     <title>Questions</title>
     <link rel="stylesheet" type="text/css"
@@ -11,13 +11,14 @@
 </head>
 <body>
 <p></p>
+
 <div layout:fragment="content">
     <div class="container">
-        <form th:action="@{/forms/questions}" method="get">
+        <!--<form th:action="@{/forms/questions}" method="get">
             <label>mot clé</label>
             <input type="text" name="mc" th:value="${motCle}"/>
             <button class="btn btn-primary">chercher</button>
-        </form>
+        </form>-->
     </div>
     <div class="container">
         <h2>Questions</h2>
@@ -29,33 +30,38 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="contenu,status:${questions}">
+            <tr th:each="contenu,status:${questionsForAForm}">
                 <td th:text="${status.index+1}"></td>
                 <td th:text="${contenu.contenu}"></td>
                 <td><a
-                        th:href="@{/forms/question/edit(id=${contenu.id})}">edit
-                    question
-                </a></td>
+                        th:href="@{'/forms/'+${idForm}+'/question/edit/'+${contenu.id}}">edit
+                </a>
+                </td>
                 <td>
                     <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette contenu ?')"
-                       th:href="@{/forms/question/delete(id=${contenu.getId()},page=${pageCourant},
-                size=${size},mc=${motCle})}">
+                       th:href="@{'/forms/'+${idForm}+'/question/delete/'+${contenu.id}}">
                         Delete
                     </a>
                 </td>
 
             </tr>
             </tbody>
+            <tfoot>
+
+            </tfoot>
         </table>
-    </div>
-    <div class="container">
-        <ul class="nav nav-pills">
-            <li th:class="${pageCourant}==${status.index} ? 'active':''"
-                th:each="page,status:${allPages}">
-                <a th:href="@{/forms/questions(page=${status.index},size=${size},mc=${motCle})}"
-                   th:text="${status.index}"></a>
-            </li>
-        </ul>
+        <form th:action="@{'/form/'+${idForm}+'/done'}" method="get">
+            <button type="submit" style="float: right" class="btn btn-success">Done</button>
+
+        </form>
+
+        <!--<ul class="nav nav-pills" >
+    <li th:class="${pageCourant}==${status.index} ? 'active':''"
+        th:each="page,status:${allPages}">
+    <a th:href="@{/forms/questions(page=${status.index},size=${size},mc=${motCle})}"
+       th:text="${status.index}"></a>
+    </li>
+</ul>-->
     </div>
 </div>
 </body>

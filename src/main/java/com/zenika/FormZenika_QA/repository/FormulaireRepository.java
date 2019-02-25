@@ -10,8 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FormulaireRepository extends JpaRepository<Formulaire,Long>
-{
+public interface FormulaireRepository extends JpaRepository<Formulaire, Long> {
     @Query(value = "from Formulaire f where f.titre like :x")
     Page<Formulaire> chercher(@Param("x") String mc, Pageable pageable);
 

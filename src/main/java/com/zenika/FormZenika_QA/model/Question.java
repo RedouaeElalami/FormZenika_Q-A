@@ -8,33 +8,35 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
-@Table(name = "questionTable")
-public class Question
-{
+@Table(name = "questions")
+public class Question {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "question_generator")
-    @SequenceGenerator(name = "question_generator", sequenceName = "id_question_seq", allocationSize = 1)
+    @GeneratedValue
     private Long id;
 
     @NotNull
     @NotBlank
-    @Size(min = 3,max = 1000)
+    @Lob
     private String contenu;
 
+   /* @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_FORM")*/
+
+
     @ManyToOne(fetch = FetchType.EAGER)
-   //
+    //
     // @JoinColumn(name = "ID_FORM")
     @JoinColumn(name = "ID_FORM", insertable = false, updatable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Formulaire formulaire;
 
     public Question() {
     }
 
-    public Question(@NotNull @NotBlank @Size(min = 3, max = 1000) String contenu, Formulaire formulaire) {
+    public Question(@NotNull @NotBlank String contenu, Formulaire formulaire) {
         this.contenu = contenu;
         this.formulaire = formulaire;
     }
@@ -65,5 +67,21 @@ public class Question
 
     public void setFormulaire(Formulaire formulaire) {
         this.formulaire = formulaire;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question = (Question) o;
+        return Objects.equals(id, question.id) &&
+                Objects.equals(contenu, question.contenu) &&
+                Objects.equals(formulaire, question.formulaire);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, contenu, formulaire);
     }
 }

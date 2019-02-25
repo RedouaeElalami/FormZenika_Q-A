@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="layoutQuestions">
+      layout:decorator="layoutQuestionsByForm" th:with="redouane=${questionAttribute.getId()}"
+>
 <head>
     <title>Ajout des questions</title>
     <link rel="stylesheet" type="text/css"
@@ -15,35 +16,32 @@
 </head>
 <body>
 <div layout:fragment="content">
-<div class="spacer col-md-6 col">
-    <div class="panel panel-default">
-        <div class="panel-heading">Ajouter une question</div>
-        <div class="panel-body">
-            <form th:action="@{/forms/questions/save/}" method="post" >
-               <!-- <div class="form-group">
-                    <label class="control-label">ID :</label>
-                    <input class="form-control" type="text" name="id"
-                    th:value="${questionAttribute.id}"/>
-                </div>-->
-                <div class="form-group">
-                    <label class="control-label">Question :</label>
-                    <input class="form-control" type="text" name="contenu" placeholder="Ecrivez ta question"
-                    th:value="${questionAttribute.contenu}" />
-                    <span class="red" th:erros="${questionAttribute.contenu}" ></span>
-                </div>
-                <div>
-                    <button type="submit"
-                    class="btn btn-primary">Ajouter</button>
-                </div>
-            </form>
+    <div class="spacer col-md-6 col">
+        <div class="panel panel-default">
+            <div class="panel-heading">Ajouter une question</div>
+            <div class="panel-body">
+                <form th:action="@{'/forms/questions/save/'+${questionAttribute.getFormulaire().getId()}}"
+                      method="post">
+                    <div class="form-group">
+                        <label class="control-label">Question :</label>
+                        <textarea class="form-control" rows="7" th:text="${questionAttribute.contenu}" name="contenu"
+                                  placeholder="Ecrivez ta question"></textarea>
+                        <span class="red" th:erros="${questionAttribute.contenu}"></span>
+                    </div>
+                    <div>
+                        <button type="submit"
+                                class="btn btn-info">Ajouter
+                        </button>
+                    </div>
+                </form>
+
+            </div>
 
         </div>
+        <form>
 
+        </form>
     </div>
-    <form>
-
-    </form>
-</div>
 </div>
 </body>
 </html>

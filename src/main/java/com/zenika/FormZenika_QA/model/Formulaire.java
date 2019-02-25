@@ -5,18 +5,16 @@ import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
-public class Formulaire
-{
+public class Formulaire {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "form_generator")
-    @SequenceGenerator(name = "form_generator", sequenceName = "id_form_seq", allocationSize = 1)
+    @GeneratedValue
     @Column(name = "id_form")
     private Long id;
 
     @Column(name = "titre")
     private String titre;
 
-    //@OneToMany(mappedBy = "formulaire",cascade = CascadeType.ALL,orphanRemoval = true)
+    //@OneToMany(mappedBy = "formulaire",cascade = CascadeType.ALL)
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_FORM", nullable = false, updatable = false)
     private Collection<Question> questions;
@@ -52,4 +50,6 @@ public class Formulaire
     public void setTitre(String titre) {
         this.titre = titre;
     }
+
+
 }

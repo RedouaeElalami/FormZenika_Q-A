@@ -16,27 +16,26 @@
 
 <body>
 <header>
-<!--
-    bar de navigation avec coleur par default
--->
-    <div class="navbar navbar-default">
-<!--        menu fluid-->
+    <!--
+        bar de navigation avec coleur par default
+    -->
+    <div class="navbar navbar-inverse">
+        <!--        menu fluid-->
         <div class="container-fluid">
             <ul class="nav navbar-nav">
-                <li><a th:href="@{/forms/questions}">Visualisez les questions</a></li>
-                <li><a th:href="@{/forms/formQuestion}">Ajouter les questions</a></li>
-                <li>
+                <li><a th:href="@{/forms}">Formulaires</a></li>
+                <li><a th:href="@{/forms/questions}">Visualisez tous les questions</a></li>
+                <li><a th:href="@{'/forms/formQuestion/'+${idForm}}">Ajouter une question</a></li>
+                <!--<li>
                     <a th:href="@{/forms/logout}" th:inline="text">
                         [[${#httpServletRequest.remoteUser}]]
-                    </a></li>
+                    </a></li>-->
             </ul>
         </div>
 
     </div>
 </header>
-<section layout:fragment="content">
-
-</section>
+<section layout:fragment="content"></section>
 <footer class="navbar-fixed-bottom">
     <hr/>
     <div class="container">

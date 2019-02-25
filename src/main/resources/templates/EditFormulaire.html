@@ -19,21 +19,22 @@
         <div class="panel panel-default">
             <div class="panel-heading">Editer le titre de formulaire</div>
             <div class="panel-body">
-                <form th:action="@{/forms/save}" method="post" >
+                <form th:action="@{/forms/save}" method="post">
                     <div class="form-group">
-                         <label class="control-label">ID :</label>
-                         <input class="form-control" type="text" name="id"
-                         th:value="${formulaireEdited.id}"/>
-                     </div>
+                        <label class="control-label">ID :</label>
+                        <input class="form-control" type="text" name="id"
+                               th:value="${formulaireEdited.id}"/>
+                    </div>
                     <div class="form-group">
                         <label class="control-label">titre :</label>
                         <input class="form-control" type="text" name="titre"
-                               th:value="${formulaireEdited.titre}" />
-                        <span class="red" th:erros="${formulaireEdited.titre}" ></span>
+                               th:value="${formulaireEdited.titre}"/>
+                        <span class="red" th:erros="${formulaireEdited.titre}"></span>
                     </div>
                     <div>
                         <button type="submit"
-                                class="btn btn-primary">Modifer</button>
+                                class="btn btn-warning">Modifer
+                        </button>
                     </div>
                 </form>
 

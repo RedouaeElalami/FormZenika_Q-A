@@ -15,11 +15,11 @@ public class FormulaireService {
     private FormulaireRepository formulaireRepository;
 
     public Page<Formulaire> getAllFormulaires(int page, int size, String mc) {
-        return formulaireRepository.chercher("%"+mc+"%",new PageRequest(page, size));
+        return formulaireRepository.chercher("%" + mc + "%", new PageRequest(page, size));
 
     }
-    public void addformulaire(Formulaire formulaire)
-    {
+
+    public void addformulaire(Formulaire formulaire) {
         formulaireRepository.save(formulaire);
     }
 
@@ -29,7 +29,7 @@ public class FormulaireService {
     }
 
     public void delete(Long id) {
-            formulaireRepository.deleteById(id);
+        formulaireRepository.deleteById(id);
 
     }
 }

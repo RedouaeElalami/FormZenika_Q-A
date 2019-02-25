@@ -1,31 +1,40 @@
 package com.zenika.FormZenika_QA.controller;
 
+import com.zenika.FormZenika_QA.model.Formulaire;
 import com.zenika.FormZenika_QA.model.Question;
+import com.zenika.FormZenika_QA.repository.FormulaireRepository;
+import com.zenika.FormZenika_QA.repository.QuestionRepository;
 import com.zenika.FormZenika_QA.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class QuestionController {
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private QuestionRepository questionRepository;
+    @Autowired
+    private FormulaireRepository formulaireRepository;
 
     @GetMapping("/forms/questions")
     public String getallQuestions(Model model,
                                   @RequestParam(name = "page", defaultValue = "0") int page,
-                                  @RequestParam(name = "size", defaultValue = "5") int size,
+                                  @RequestParam(name = "size", defaultValue = "10") int size,
                                   @RequestParam(name = "mc", defaultValue = "") String mc) {
         Page<Question> pagesQuestions = questionService.getAllQuestion(page, size, mc);
-        model.addAttribute("questions", pagesQuestions.getContent());
+        List<Question> content = pagesQuestions.getContent();
+        model.addAttribute("questions", content);
         int[] pages = new int[pagesQuestions.getTotalPages()];
         model.addAttribute("allPages", pages);
         model.addAttribute("size", size);
@@ -36,48 +45,104 @@ public class QuestionController {
 
 
     @GetMapping("/forms/question/delete")
-    public RedirectView delete(Long id, String mc,
-                               int page, int size) {
+    public RedirectView deleteFromAllQuestions(Long id, String mc,
+                                               int page, int size) {
         questionService.delete(id);
         return new RedirectView
                 ("/forms/questions?page=" + page +
                         "&size=" + size + "&mc=" + mc);
     }
 
-    @GetMapping("/forms/formQuestion")
-    public String FormAddQuestion(Model model) {
-        model.addAttribute("questionAttribute", new Question());
+    @GetMapping("/forms/{idForm}/question/delete/{idQuestion}")
+    public RedirectView deleteQuestionByForm(@PathVariable Long idQuestion
+            , @PathVariable Long idForm) {
+        questionService.delete(idQuestion);
+        return new RedirectView("/forms/questions/{idForm}");
+    }
+   /* @GetMapping("/forms/question/")
+    public RedirectView redirection(){
+        return new RedirectView
+                ("/forms/questions?page=" );
+    }*/
+
+    @GetMapping("/forms/formQuestion/{id}")
+    public String FormAddQuestion(Model model, @PathVariable Long id) {
+
+        System.out.println("id= " + id);
+        Formulaire formulaire = formulaireRepository.findById(id).get();
+        Question questionAdded = new Question();
+        //   formulaire.getQuestions().add(questionAdded);
+        questionAdded.setFormulaire(formulaire);
+        model.addAttribute("questionAttribute", questionAdded);
+
         return "FormQuestion";
     }
-    @GetMapping("/forms/question/edit")
-    public String edit(Model model,Long id) {
+   /* @GetMapping("/forms/question/edit")
+    public String editForAllQuestion(Model model,Long id) {
         Question question = questionService.updateQuestion(id);
+        model.addAttribute("questionEdited", question);
+        return "EditQuestion";
+    }*/
+
+    @GetMapping("/forms/{idForm}/question/edit/{idQuestion}")
+    public String editQuestionbyForm(Model model, @PathVariable Long idForm, @PathVariable Long idQuestion) {
+        Question question = questionService.updateQuestionByFormulaire(idQuestion, idForm);
         model.addAttribute("questionEdited", question);
         return "EditQuestion";
     }
 
     //bindingResult collection pour stocker les erreurs
-    @PostMapping("/forms/questions/save")
-    public RedirectView save(@Valid Question q, BindingResult bindingResult) {
+    @PostMapping("/forms/questions/save/{id}")
+    public RedirectView save(@Valid Question q, BindingResult bindingResult, @PathVariable Long id) {
         if (bindingResult.hasErrors())
-            return new RedirectView("/forms/formQuestion");
-        questionService.addQuestion(q);
-        return new RedirectView("/forms/questions");
-    }
-    @GetMapping("/")
-    public RedirectView home()
-    {
-        return new RedirectView("questions");
-    }
-    @GetMapping("/403")
-    public String accessDenied()
-    {
-        return "403";
-    }
-    @GetMapping("/form")
-    public String addForm()
-    {
-        return "formulaireHOME";
+            return new RedirectView("/forms/formQuestion/{id}");
+        Formulaire formulaire = formulaireRepository.findById(id).get();
+        formulaire.getQuestions().add(q);
+        formulaireRepository.save(formulaire);
+        return new RedirectView("/forms/questions/{id}");
     }
 
+    @PostMapping("/forms/{idF}/questions/{idQ}/save")
+    public RedirectView saveEditQuestion(
+            @Valid Question questionEdited, BindingResult bindingResult
+            , @PathVariable Long idQ, @PathVariable Long idF) {
+        if (bindingResult.hasErrors())
+            return new RedirectView("/forms/formQuestion/{idF}");
+
+        Formulaire formulaire = formulaireRepository.findById(idF).get();
+        questionRepository.save(questionEdited);
+        return new RedirectView("/forms/questions/{idF}");
+    }
+
+    @GetMapping("/")
+    public RedirectView home() {
+        return new RedirectView("questions");
+    }
+
+
+    @GetMapping("/forms/questions/{id}")
+    public String getAllQuestionByFormId(Model model, @PathVariable Long id) {
+        Formulaire formulaire = formulaireRepository.findById(id).get();
+        model.addAttribute("formul", formulaire);
+        model.addAttribute("idForm", id);
+        model.addAttribute("nomForm",formulaire.getTitre());
+        Collection<Question> questions = formulaire.getQuestions();
+        model.addAttribute("questionsForAForm", questionRepository.findByFormulaire(formulaire));
+        if (GiveAllAttributeToLayout()) return "layoutQuestionsByForm";
+        if (GiveAllAttributeToLayout()) return "confirmation";
+        return "questionsByForm";
+    }
+
+    @GetMapping("/form/{idForm}/done")
+    public String confirmSendFormulaire(@PathVariable Long idForm, Model model) {
+        Formulaire formulaire = formulaireRepository.findById(idForm).get();
+        List<Question> questionsByFormulaire = questionRepository.findByFormulaire(formulaire);
+        model.addAttribute("questionsByForm", questionsByFormulaire);
+        return "confirmation";
+    }
+
+    private boolean GiveAllAttributeToLayout() {
+        if (1 != 1) return true;
+        return false;
+    }
 }

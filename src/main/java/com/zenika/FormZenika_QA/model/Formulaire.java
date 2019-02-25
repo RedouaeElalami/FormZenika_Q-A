@@ -5,7 +5,8 @@ import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
-public class Formulaire {
+public class Formulaire
+{
     @Id
     @GeneratedValue
     @Column(name = "id_form")

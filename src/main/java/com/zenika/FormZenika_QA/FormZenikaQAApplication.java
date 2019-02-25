@@ -1,5 +1,6 @@
 package com.zenika.FormZenika_QA;
 
+import com.zenika.FormZenika_QA.model.Answer;
 import com.zenika.FormZenika_QA.model.Formulaire;
 import com.zenika.FormZenika_QA.model.Question;
 import com.zenika.FormZenika_QA.repository.FormulaireRepository;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @SpringBootApplication
 public class FormZenikaQAApplication {
@@ -28,6 +30,7 @@ public class FormZenikaQAApplication {
 				.forEach(q-> System.out.println("questionAttribute = " + q.getContenu()));*/
 
         FormulaireRepository fr = ctx.getBean(FormulaireRepository.class);
+        QuestionRepository qr = ctx.getBean(QuestionRepository.class);
         Question q = new Question("age");
         Question qq = new Question("prenom");
         Question q3 = new Question("nom");
@@ -39,7 +42,8 @@ public class FormZenikaQAApplication {
         questions.add(q3);
         questions.add(q4);
         questions.add(q5);
-        fr.save(new Formulaire("titre1", questions));
+        Formulaire formulaire = new Formulaire("titre1", questions);
+        fr.save(formulaire);
         Question q10 = new Question("motivation ?");
         Question q11 = new Question("perspectives ?");
         Question q12 = new Question("c'est quoi Zenika selon vous ?");
@@ -51,6 +55,16 @@ public class FormZenikaQAApplication {
         questions2.add(q13);
         fr.save(new Formulaire("titre2", questions2));
         //	fr.save(new Formulaire(questionRepository.findAll()));
+/*
+        Answer an = new Answer("SII");
+        Question question = new Question("Zenika ?", an);
+        an.setQuestion(question);
+
+       // qr.save(question);
+        List<Question> questionList = new ArrayList<>();
+        questionList.add(question);
+        fr.save(new Formulaire("formualire Question Response",questionList));*/
+
 
     }
 }

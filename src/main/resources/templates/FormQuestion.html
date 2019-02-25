@@ -24,8 +24,8 @@
                       method="post">
                     <div class="form-group">
                         <label class="control-label">Question :</label>
-                        <textarea class="form-control" rows="7" th:text="${questionAttribute.contenu}" name="contenu"
-                                  placeholder="Ecrivez ta question"></textarea>
+                        <textarea class="form-control" th:text="${questionAttribute.contenu}" name="contenu"
+                                  placeholder="Ecrivez votre question"></textarea>
                         <span class="red" th:erros="${questionAttribute.contenu}"></span>
                     </div>
                     <div>

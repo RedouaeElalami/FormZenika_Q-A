@@ -33,7 +33,7 @@ public class QuestionService {
     public void addQuestion(Question question, Long idForm) {
 
         Optional<Formulaire> formFound = formulaireRepository.findById(idForm);
-        Collection<Question> questionsByForm = formFound.get().getQuestions();
+        Collection<Question> questionsByForm = formFound.orElse(null).getQuestions();
         //questionsByForm.add(question);
         // formFound.get().getQuestions().add(question);
 
@@ -46,10 +46,9 @@ public class QuestionService {
         return optionalQuestion.get();
     }
 
-    public Question updateQuestionByFormulaire(Long idQuestion, Long idForm) {
-        Question questiobByForm = questionRepository
+    public Question findEditedQuestion(Long idQuestion, Long idForm) {
+        return questionRepository
                 .findByIdAndFormulaireId(idQuestion, idForm)
-                .get();
-        return questiobByForm;
+                .orElse(null);
     }
 }

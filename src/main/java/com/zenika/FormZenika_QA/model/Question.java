@@ -23,15 +23,24 @@ public class Question {
     @Lob
     private String contenu;
 
-   /* @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_FORM")*/
-
-
     @ManyToOne(fetch = FetchType.EAGER)
-    //
-    // @JoinColumn(name = "ID_FORM")
     @JoinColumn(name = "ID_FORM", insertable = false, updatable = false)
     private Formulaire formulaire;
+
+    @OneToOne(mappedBy ="questionn",cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "ID_question", nullable = false, updatable = false)
+    private Answer answer;
+
+    public Question(@NotNull @NotBlank String contenu, Formulaire formulaire, Answer answer) {
+        this.contenu = contenu;
+        this.formulaire = formulaire;
+        this.answer = answer;
+    }
+
+    public Question(@NotNull @NotBlank String contenu, Answer answer) {
+        this.contenu = contenu;
+        this.answer = answer;
+    }
 
     public Question() {
     }
@@ -83,5 +92,13 @@ public class Question {
     @Override
     public int hashCode() {
         return Objects.hash(id, contenu, formulaire);
+    }
+
+    public Answer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
     }
 }

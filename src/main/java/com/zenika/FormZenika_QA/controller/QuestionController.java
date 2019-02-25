@@ -86,7 +86,7 @@ public class QuestionController {
 
     @GetMapping("/forms/{idForm}/question/edit/{idQuestion}")
     public String editQuestionbyForm(Model model, @PathVariable Long idForm, @PathVariable Long idQuestion) {
-        Question question = questionService.updateQuestionByFormulaire(idQuestion, idForm);
+        Question question = questionService.findEditedQuestion(idQuestion, idForm);
         model.addAttribute("questionEdited", question);
         return "EditQuestion";
     }
@@ -96,7 +96,7 @@ public class QuestionController {
     public RedirectView save(@Valid Question q, BindingResult bindingResult, @PathVariable Long id) {
         if (bindingResult.hasErrors())
             return new RedirectView("/forms/formQuestion/{id}");
-        Formulaire formulaire = formulaireRepository.findById(id).get();
+        Formulaire formulaire = formulaireRepository.findById(id).orElse(null);
         formulaire.getQuestions().add(q);
         formulaireRepository.save(formulaire);
         return new RedirectView("/forms/questions/{id}");
@@ -109,8 +109,12 @@ public class QuestionController {
         if (bindingResult.hasErrors())
             return new RedirectView("/forms/formQuestion/{idF}");
 
-        Formulaire formulaire = formulaireRepository.findById(idF).get();
-        questionRepository.save(questionEdited);
+        Formulaire formulaire = formulaireRepository.findById(idF).orElse(null);
+        questionEdited.setFormulaire(formulaire);
+        Optional<Question> qByF = questionRepository.findByIdAndFormulaireId(idQ, idF);
+        qByF.get().setContenu(questionEdited.getContenu());
+        formulaireRepository.save(formulaire);
+
         return new RedirectView("/forms/questions/{idF}");
     }
 
@@ -142,7 +146,6 @@ public class QuestionController {
     }
 
     private boolean GiveAllAttributeToLayout() {
-        if (1 != 1) return true;
         return false;
     }
 }

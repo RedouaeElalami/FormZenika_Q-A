@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      >
+<head>
+    <title>Questions</title>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/style.css"
+          th:href="@{/css/style.css}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+</head>
+<body style="background-color:#16030e;">
+<p></p>
+
+<div layout:fragment="content">
+    <div class="container">
+    </div>
+    <div class="container">
+        <h2 style="color:#8b1358;">Questions</h2>
+        <form>
+
+        <table class="table-condensed">
+            <thead>
+            <tr class="active">
+            </tr>
+            </thead>
+            <tbody>
+            <div class="info" th:each="questionForForm,status:${AllQuestionsByForm}">
+              <tr>
+                    <td  th:text="${status.index+1}+': '+ ${questionForForm.contenu}"
+                         style="font-size:25px;font-family:verdana;color:#0b0aff;"
+
+                         ></td>
+              </tr>
+
+                <tr>
+                <div class="form-group">
+                    <td class="areaTextStyle">
+                        <label class="control-label">Réponse:</label>
+                        <textarea class="form-control " cols="100" rows="10"
+                                  name="response" style="font-family:courier;"
+
+                                  placeholder="Ecrivez votre reponse"></textarea>
+                    </td>
+                </div>
+                </tr>
+            </div>
+            </tbody>
+            <tfoot>
+
+            </tfoot>
+        </table>
+
+        </form>
+        <form th:action="@{/form/confirm}" method="get">
+            <button type="submit" style="float: right" class="btn btn-success">envoyé</button>
+        </form>
+
+    </div>
+</div>
+</body>
+</html>

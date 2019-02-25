@@ -34,7 +34,7 @@
 
             </tfoot>
         </table>
-        <form th:action="@{/form/confirm}" method="get">
+        <form th:action="@{'/formulaire/'+${idForm}}" method="get">
             <button type="submit" style="float: right" class="btn btn-success">envoyé</button>
         </form>
         <form th:action="@{'/forms/questions/'+${idForm}}" method="get">

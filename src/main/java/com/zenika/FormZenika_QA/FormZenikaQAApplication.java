@@ -55,7 +55,6 @@ public class FormZenikaQAApplication {
         questions2.add(q13);
         fr.save(new Formulaire("titre2", questions2));
         //	fr.save(new Formulaire(questionRepository.findAll()));
-/*
         Answer an = new Answer("SII");
         Question question = new Question("Zenika ?", an);
         an.setQuestion(question);
@@ -63,7 +62,7 @@ public class FormZenikaQAApplication {
        // qr.save(question);
         List<Question> questionList = new ArrayList<>();
         questionList.add(question);
-        fr.save(new Formulaire("formualire Question Response",questionList));*/
+        fr.save(new Formulaire("formualire Question Response",questionList));
 
 
     }

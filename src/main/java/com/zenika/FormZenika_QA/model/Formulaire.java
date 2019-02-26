@@ -15,6 +15,8 @@ public class Formulaire
     @Column(name = "titre")
     private String titre;
 
+    private String description;
+
     //@OneToMany(mappedBy = "formulaire",cascade = CascadeType.ALL)
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_FORM", nullable = false, updatable = false)
@@ -52,5 +54,11 @@ public class Formulaire
         this.titre = titre;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

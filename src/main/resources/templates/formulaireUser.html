@@ -15,14 +15,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
 </head>
-<body style="background-color:#16030e;">
+
+
+<body style="background-color:#ffffff;">
 <p></p>
 
-<div layout:fragment="content">
+<div align="center">
     <div class="container">
     </div>
     <div class="container">
-        <h2 style="color:#8b1358;">Questions</h2>
+        <h2 style="color:#16030e;">Questions</h2>
         <form>
 
         <table class="table-condensed">
@@ -33,9 +35,8 @@
             <tbody>
             <div class="info" th:each="questionForForm,status:${AllQuestionsByForm}">
               <tr>
-                    <td  th:text="${status.index+1}+': '+ ${questionForForm.contenu}"
-                         style="font-size:25px;font-family:verdana;color:#0b0aff;"
-
+                    <td  th:text="${status.index+1}+'- '+ ${questionForForm.contenu}"
+                         style="font-size:25px;font-family:verdana;color:#16030e;"
                          ></td>
               </tr>
 
@@ -44,7 +45,7 @@
                     <td class="areaTextStyle">
                         <label class="control-label">Réponse:</label>
                         <textarea class="form-control " cols="100" rows="10"
-                                  name="response" style="font-family:courier;"
+                                  name="response" style="font-family:courier; font-size: 20px;"
 
                                   placeholder="Ecrivez votre reponse"></textarea>
                     </td>

@@ -27,7 +27,7 @@ public class FormulaireController {
     @GetMapping("/forms")
     public String getAllFormulairs(Model model,
                                    @RequestParam(name = "page", defaultValue = "0") int page,
-                                   @RequestParam(name = "size", defaultValue = "5") int size,
+                                   @RequestParam(name = "size", defaultValue = "20") int size,
                                    @RequestParam(name = "mc", defaultValue = "") String mc) {
         Page<Formulaire> formulairePage = formulaireService.getAllFormulaires(page, size, mc);
         model.addAttribute("formulaires", formulairePage.getContent());

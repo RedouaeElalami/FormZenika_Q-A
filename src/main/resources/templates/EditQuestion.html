@@ -21,11 +21,8 @@
             <div class="panel-body">
                 <form th:action="@{'/forms/'+${questionEdited.getFormulaire().getId()}+'/questions/'+${questionEdited.id}+'/save/'}"
                       method="post">
-                    <div class="form-group">
-                        <label class="control-label">ID :</label>
-                        <input class="form-control" type="text" name="id"
+                        <input class="form-control" type="hidden" name="id"
                                th:value="${questionEdited.id}"/>
-                    </div>
                     <div class="form-group">
                         <label class="control-label">Question :</label>
                         <textarea class="form-control" rows="7" th:text="${questionEdited.contenu}" name="contenu"

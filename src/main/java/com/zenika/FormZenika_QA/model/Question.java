@@ -27,8 +27,8 @@ public class Question {
     @JoinColumn(name = "ID_FORM", insertable = false, updatable = false)
     private Formulaire formulaire;
 
-    @OneToOne(mappedBy ="questionn",cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "ID_question", nullable = false, updatable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(unique = true)
     private Answer answer;
 
     public Question(@NotNull @NotBlank String contenu, Formulaire formulaire, Answer answer) {
@@ -101,4 +101,6 @@ public class Question {
     public void setAnswer(Answer answer) {
         this.answer = answer;
     }
+
+
 }

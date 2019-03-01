@@ -25,7 +25,7 @@
 }
 
 .tableCenter {
-    margin: 150px 5px 15px 20px;
+    margin: 80px 5px 15px 20px;
 
 /*    top margin is 10px
     right margin is 5px
@@ -33,6 +33,15 @@
     left margin is 20px*/
 
 }
+.margeBottomButton
+{
+    padding-bottom: -10px;
+    margin-bottom: -30px;
+}
 table th {
     text-align: center;
+}
+.margeBottomForDescription
+{
+    margin-bottom: 20px;
 }

@@ -25,7 +25,7 @@
                                th:value="${questionEdited.id}"/>
                     <div class="form-group">
                         <label class="control-label">Question :</label>
-                        <textarea class="form-control" rows="7" th:text="${questionEdited.contenu}" name="contenu"
+                        <textarea class="form-control" rows="15" th:text="${questionEdited.contenu}" name="contenu"
                                   placeholder="Modifiez votre question"
                         ></textarea>
                         <span class="red" th:erros="${questionEdited.contenu}"></span>

@@ -2,7 +2,9 @@ package com.zenika.FormZenika_QA.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class Formulaire
@@ -15,17 +17,18 @@ public class Formulaire
     @Column(name = "titre")
     private String titre;
 
+    @Lob
     private String description;
 
     //@OneToMany(mappedBy = "formulaire",cascade = CascadeType.ALL)
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_FORM", nullable = false, updatable = false)
-    private Collection<Question> questions;
+    private List<Question> questions;
 
     public Formulaire() {
     }
 
-    public Formulaire(String titre, Collection<Question> questions) {
+    public Formulaire(String titre, List<Question> questions) {
         this.titre = titre;
         this.questions = questions;
     }
@@ -38,11 +41,11 @@ public class Formulaire
         this.id = id;
     }
 
-    public Collection<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(Collection<Question> questions) {
+    public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
 
@@ -60,5 +63,11 @@ public class Formulaire
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Formulaire(String titre, String description, List<Question> questions) {
+        this.titre = titre;
+        this.description = description;
+        this.questions = questions;
     }
 }

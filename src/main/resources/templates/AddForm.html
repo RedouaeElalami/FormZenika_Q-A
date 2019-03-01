@@ -31,6 +31,14 @@
                                placeholder="Ecrivez votre titre de formulaire"
                                th:value="${formulaireAttribute.titre}"/>
                         <span class="red" th:erros="${formulaireAttribute.titre}"></span>
+                        <p>
+                        </p>
+
+                        <label class="control-label">Description de formulaire :</label>
+                        <textarea class="form-control"  rows="5" type="text" name="description"
+                               placeholder="Ecrivez votre description de formulaire"
+                               th:value="${formulaireAttribute.description}"></textarea>
+                        <span class="red" th:erros="${formulaireAttribute.description}"></span>
                     </div>
                     <div>
                         <button type="submit"

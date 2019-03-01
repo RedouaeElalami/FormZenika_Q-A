@@ -17,18 +17,23 @@ public class Answer implements Serializable
     @NotBlank
     private String response;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Question questionn;
+    @OneToOne(mappedBy = "answer")
+    private Question question;
 
     public Answer() {
     }
 
+    public Answer(Long i, Question question) {
+        this.id=i;
+        this.question=question;
+    }
+
     public Question getQuestionn() {
-        return questionn;
+        return question;
     }
 
     public void setQuestionn(Question questionn) {
-        this.questionn = questionn;
+        this.question= questionn;
     }
 
     public Answer(Long id, String response) {
@@ -36,9 +41,10 @@ public class Answer implements Serializable
         this.response = response;
     }
 
+
     public Answer(String response, Question question) {
         this.response = response;
-        this.questionn = question;
+        this.question = question;
     }
 
     public Long getId() {
@@ -58,14 +64,23 @@ public class Answer implements Serializable
     }
 
     public Question getQuestion() {
-        return questionn;
+        return question;
     }
 
     public void setQuestion(Question question) {
-        this.questionn = question;
+        this.question = question;
     }
 
     public Answer(String response) {
         this.response = response;
+    }
+
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "id=" + id +
+                ", response='" + response + '\'' +
+                ", questionn=" + question +
+                '}';
     }
 }

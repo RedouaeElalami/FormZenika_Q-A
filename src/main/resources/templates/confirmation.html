@@ -12,11 +12,13 @@
 <body>
 <p></p>
 
-<div layout:fragment="content">
     <div class="container">
-    </div>
-    <div class="container">
-        <h2>Questions</h2>
+        <h1 th:text="${questionsByForm.get(0).getFormulaire().titre}" th:name="titre" align="center"></h1>
+
+        <blockquote class=" well">
+            <h4 style="color: #2b542c" th:text="${questionsByForm.get(0).getFormulaire().description}"></h4>
+
+        </blockquote>
         <table class="table">
             <thead>
             <tr class="active">

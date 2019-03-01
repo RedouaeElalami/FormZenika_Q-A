@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      >
+>
 <head>
     <title>Questions</title>
     <link rel="stylesheet" type="text/css"
@@ -14,6 +14,7 @@
           th:href="@{/css/style.css}">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
+
 </head>
 
 
@@ -21,48 +22,59 @@
 <p></p>
 
 <div align="center">
+    <img th:src="@{/css/zenika.png}" class="img-rounded" alt="Zenika">
     <div class="container">
-    </div>
-    <div class="container">
-        <h2 style="color:#16030e;">Questions</h2>
-        <form>
+        <h1 th:text="${formulaire.titre}" th:name="titre" align="center"></h1>
 
-        <table class="table-condensed">
-            <thead>
-            <tr class="active">
-            </tr>
-            </thead>
-            <tbody>
-            <div class="info" th:each="questionForForm,status:${AllQuestionsByForm}">
-              <tr>
-                    <td  th:text="${status.index+1}+'- '+ ${questionForForm.contenu}"
-                         style="font-size:25px;font-family:verdana;color:#16030e;"
-                         ></td>
-              </tr>
+        <h2 style="color: #9b1211" th:text="${formulaire.description}"></h2>
 
-                <tr>
-                <div class="form-group">
-                    <td class="areaTextStyle">
-                        <label class="control-label">Réponse:</label>
-                        <textarea class="form-control " cols="100" rows="10"
-                                  name="response" style="font-family:courier; font-size: 20px;"
+        <form th:action="@{'/formulaire/'+${formulaire.id}+'/send'}" th:object="${responseWrapper}" method="post">
 
-                                  placeholder="Ecrivez votre reponse"></textarea>
-                    </td>
-                </div>
+            <table class="table-condensed">
+                <thead>
+                <tr class="active">
                 </tr>
-            </div>
-            </tbody>
-            <tfoot>
+                </thead>
+                <tbody>
+                <div class="info" th:each="questionForForm,itemStat:*{answers}">
+                   <!-- <tr>
+                        <td  th:text="${itemStat.index+1}+'- '+ ${questionForForm.getContenu()}"
+                             style="font-size:25px;font-family:verdana,fantasy;color:#16030e;"
+                        ></td>
+                    </tr>-->
 
-            </tfoot>
-        </table>
 
-        </form>
-        <form th:action="@{/form/confirm}" method="get">
+                    <tr>
+                        <div class="form-group">
+
+
+                            </td>
+                            <td class="areaTextStyle">
+                                <label class="control-label">Réponse:</label>
+                                <textarea th:id='1' class="form-control " cols="100" placeholder="Ecrivez votre reponse"
+                                          rows="10"
+                                          style="font-family:courier,serif; font-size: 20px;"
+
+                                          name="response"
+
+                                          th:field="*{answers[__${itemStat.index}__].response}">
+
+                                </textarea>
+
+                            </td>
+                        </div>
+                    </tr>
+                </div>
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+
+
             <button type="submit" style="float: right" class="btn btn-success">envoyé</button>
-        </form>
 
+        </form>
     </div>
 </div>
 </body>

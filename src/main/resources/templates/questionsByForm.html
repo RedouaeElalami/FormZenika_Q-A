@@ -24,50 +24,57 @@
             <input type="text" name="mc" th:value="${motCle}"/>
             <button class="btn btn-primary">chercher</button>
         </form>-->
-    <div class="container">
-        <h2>Questions</h2>
+        <div class="container">
+            <h1 th:text="${formul.titre}" align="center"></h1>
 
-        <table class="table table-condensed">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Question</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="contenu,status:${questionsForAForm}">
-                <td th:text="${status.index+1}"></td>
-                <td th:text="${contenu.contenu}"></td>
-                <td><a
-                        th:href="@{'/forms/'+${idForm}+'/question/edit/'+${contenu.id}}">edit
+            <blockquote class=" well">
+                <h4 style="color: #2b542c" th:text="${formul.description}"></h4>
+                <a  th:href="@{/forms/edit(id=${formul.getId()})}">
+                    <button type="submit" style="float: right" class="btn btn-warning btn-sm margeBottomButton">Modifier</button>
                 </a>
-                </td>
-                <td>
-                    <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette contenu ?')"
-                       th:href="@{'/forms/'+${idForm}+'/question/delete/'+${contenu.id}}">
-                        Delete
+            </blockquote>
+
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Question</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="contenu,status:${questionsForAForm}">
+                    <td th:text="${status.index+1}"></td>
+                    <td th:text="${contenu.contenu}"></td>
+                    <td><a
+                            th:href="@{'/forms/'+${idForm}+'/question/edit/'+${contenu.id}}">edit
                     </a>
-                </td>
+                    </td>
+                    <td>
+                        <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette contenu ?')"
+                           th:href="@{'/forms/'+${idForm}+'/question/delete/'+${contenu.id}}">
+                            Delete
+                        </a>
+                    </td>
 
-            </tr>
-            </tbody>
-            <tfoot>
+                </tr>
+                </tbody>
+                <tfoot>
 
-            </tfoot>
-        </table>
-        <form th:action="@{'/form/'+${idForm}+'/done'}" method="get">
-            <button type="submit" style="float: right" class="btn btn-success">Done</button>
+                </tfoot>
+            </table>
+            <form th:action="@{'/form/'+${idForm}+'/done'}" method="get">
+                <button type="submit" style="float: right" class="btn btn-success">Done</button>
 
-        </form>
+            </form>
 
-        <!--<ul class="nav nav-pills" >
-    <li th:class="${pageCourant}==${status.index} ? 'active':''"
-        th:each="page,status:${allPages}">
-    <a th:href="@{/forms/questions(page=${status.index},size=${size},mc=${motCle})}"
-       th:text="${status.index}"></a>
-    </li>
-</ul>-->
-    </div>
+            <!--<ul class="nav nav-pills" >
+        <li th:class="${pageCourant}==${status.index} ? 'active':''"
+            th:each="page,status:${allPages}">
+        <a th:href="@{/forms/questions(page=${status.index},size=${size},mc=${motCle})}"
+           th:text="${status.index}"></a>
+        </li>
+    </ul>-->
+        </div>
     </div>
 </div>
 </body>

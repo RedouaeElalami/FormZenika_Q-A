@@ -42,8 +42,9 @@ public class FormulaireController {
     @GetMapping("/forms/addFormulaire")
     public String FormAddQuestion(Model model) {
         String title = null;
-        List<Question> questions = new ArrayList<>();
-        Formulaire formulaire = new Formulaire(title, questions);
+        ArrayList<Question> questions = new ArrayList<>();
+        String desciption=null;
+        Formulaire formulaire = new Formulaire(title,desciption, questions);
         model.addAttribute("formulaireAttribute", formulaire);
         return "AddForm";
     }

@@ -1,15 +1,20 @@
 package com.zenika.FormZenika_QA.controller;
 
+import com.zenika.FormZenika_QA.model.Answer;
 import com.zenika.FormZenika_QA.model.Formulaire;
+import com.zenika.FormZenika_QA.model.Question;
 import com.zenika.FormZenika_QA.repository.AnswerRespository;
 import com.zenika.FormZenika_QA.repository.FormulaireRepository;
 import com.zenika.FormZenika_QA.repository.QuestionRepository;
+import com.zenika.FormZenika_QA.wrapper.ResponseListWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Controller
 public class ResponsesQuestions
@@ -26,14 +31,60 @@ public class ResponsesQuestions
     @GetMapping("/formulaire/{idForm}")
     public String formualireForUser(Model model,@PathVariable Long idForm)
     {
-        if (useAtttributeOfFormIDFromConfirmationView()) return "confirmation";
+        if (returnFalse()) return "confirmation";
         Formulaire formulaireFound = formulaireRepository.findById(idForm).orElse(null);
-        model.addAttribute("AllQuestionsByForm",formulaireFound.getQuestions());
+        if (formulaireFound != null) {
+            List<Question> questionsByForm = formulaireFound.getQuestions();
+            model.addAttribute("AllQuestionsByForm", questionsByForm);
+            model.addAttribute("formulaire",formulaireFound);
+            ResponseListWrapper responseListWrapper = new ResponseListWrapper();
 
+            List<Answer> answers = new ArrayList<>();
+
+
+            int sizeQ = questionsByForm.size();
+            for (int i = 0; i < sizeQ; i++) {
+                answers.add(new Answer());
+               // answers.get(i).setQuestion(questionsByForm.get(i));
+            }
+            responseListWrapper.setAnswers(answers);
+            //  model.addAttribute("AllAnswers", answerRespository.findAll());
+            model.addAttribute("responseWrapper", responseListWrapper);
+        }
         return "formulaireUser";
     }
 
-    private boolean useAtttributeOfFormIDFromConfirmationView() {
+    @PostMapping("/formulaire/{id}/send")
+    public String saveAnswers(Model model, @PathVariable(name = "id") Long id,@ModelAttribute ResponseListWrapper responseListWrapper)
+    {
+        Formulaire formulaire = formulaireRepository.getOne(id);
+        List<Question> questions = formulaire.getQuestions();
+        List<Answer> answers = responseListWrapper.getAnswers();
+
+        for (int i = 0; i < questions.size(); i++) {
+            questions.get(i).setAnswer(answers.get(i));
+            System.out.println("answers = " + responseListWrapper);
+            // answers.get(i).setQuestion(questionsByForm.get(i));
+           // answerRespository.save(answers.get(i));
+
+        }
+
+        formulaire.setQuestions(questions);
+        questionRepository.saveAll(questions);
+
+
+        // model.addAttribute("AllAnswers", answerRespository.findAll());
+
+        //System.out.println("answer = " + answer);
+        return "403";
+    }
+
+ /*   public ModelAndView doUpdateSetCharges(@RequestBody List<EntSetCharges> tempEntSetChargesList){
+// Do your stuff and dont forget return
+        return new ModelAndView();
+    }*/
+
+    private boolean returnFalse() {
         if(false) return true;
         return false;
     }

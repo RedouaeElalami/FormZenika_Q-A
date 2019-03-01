@@ -74,6 +74,7 @@ public class QuestionController {
         //   formulaire.getQuestions().add(questionAdded);
         questionAdded.setFormulaire(formulaire);
         model.addAttribute("questionAttribute", questionAdded);
+        System.out.println("questionAdded = " + questionAdded.getId());
 
         return "FormQuestion";
     }
@@ -97,7 +98,10 @@ public class QuestionController {
         if (bindingResult.hasErrors())
             return new RedirectView("/forms/formQuestion/{id}");
         Formulaire formulaire = formulaireRepository.findById(id).orElse(null);
-        formulaire.getQuestions().add(q);
+        if (formulaire != null) {
+            formulaire.getQuestions().add(q);
+        }
+        System.out.println("q = " + q.getId());
         formulaireRepository.save(formulaire);
         return new RedirectView("/forms/questions/{id}");
     }
@@ -109,11 +113,15 @@ public class QuestionController {
         if (bindingResult.hasErrors())
             return new RedirectView("/forms/formQuestion/{idF}");
 
+
+
         Formulaire formulaire = formulaireRepository.findById(idF).orElse(null);
         questionEdited.setFormulaire(formulaire);
         Optional<Question> qByF = questionRepository.findByIdAndFormulaireId(idQ, idF);
         qByF.get().setContenu(questionEdited.getContenu());
         formulaireRepository.save(formulaire);
+
+
 
         return new RedirectView("/forms/questions/{idF}");
     }
@@ -147,5 +155,14 @@ public class QuestionController {
 
     private boolean GiveAllAttributeToLayout() {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "QuestionController{" +
+                "questionService=" + questionService +
+                ", questionRepository=" + questionRepository +
+                ", formulaireRepository=" + formulaireRepository +
+                '}';
     }
 }

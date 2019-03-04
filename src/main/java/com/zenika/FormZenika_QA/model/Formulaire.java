@@ -1,14 +1,11 @@
 package com.zenika.FormZenika_QA.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.List;
 
 @Entity
-public class Formulaire
-{
+public class Formulaire {
     @Id
     @GeneratedValue
     @Column(name = "id_form")
@@ -20,7 +17,6 @@ public class Formulaire
     @Lob
     private String description;
 
-    //@OneToMany(mappedBy = "formulaire",cascade = CascadeType.ALL)
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_FORM", nullable = false, updatable = false)
     private List<Question> questions;

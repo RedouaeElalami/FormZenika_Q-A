@@ -36,12 +36,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                <div class="info" th:each="questionForForm,itemStat:*{answers}">
-                   <!-- <tr>
-                        <td  th:text="${itemStat.index+1}+'- '+ ${questionForForm.getContenu()}"
-                             style="font-size:25px;font-family:verdana,fantasy;color:#16030e;"
-                        ></td>
-                    </tr>-->
+                <div class="info" th:each="answer,itemStat:*{answers}">
+
+
+                    <tr th:each="question,stat:${AllQuestionsByForm}">
+                        <div th:if="${itemStat.index==stat.index}">
+                            <td th:text="${stat.index+1}+'- '+ ${question.contenu}"
+                                style="font-size:25px;font-family:verdana,fantasy;color:#16030e;"
+                            ></td>
+                        </div>
+                    </tr>
 
 
                     <tr>

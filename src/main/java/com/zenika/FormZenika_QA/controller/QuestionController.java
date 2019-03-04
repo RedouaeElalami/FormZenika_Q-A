@@ -59,11 +59,6 @@ public class QuestionController {
         questionService.delete(idQuestion);
         return new RedirectView("/forms/questions/{idForm}");
     }
-   /* @GetMapping("/forms/question/")
-    public RedirectView redirection(){
-        return new RedirectView
-                ("/forms/questions?page=" );
-    }*/
 
     @GetMapping("/forms/formQuestion/{id}")
     public String FormAddQuestion(Model model, @PathVariable Long id) {
@@ -78,12 +73,7 @@ public class QuestionController {
 
         return "FormQuestion";
     }
-   /* @GetMapping("/forms/question/edit")
-    public String editForAllQuestion(Model model,Long id) {
-        Question question = questionService.updateQuestion(id);
-        model.addAttribute("questionEdited", question);
-        return "EditQuestion";
-    }*/
+
 
     @GetMapping("/forms/{idForm}/question/edit/{idQuestion}")
     public String editQuestionbyForm(Model model, @PathVariable Long idForm, @PathVariable Long idQuestion) {
@@ -114,13 +104,11 @@ public class QuestionController {
             return new RedirectView("/forms/formQuestion/{idF}");
 
 
-
         Formulaire formulaire = formulaireRepository.findById(idF).orElse(null);
         questionEdited.setFormulaire(formulaire);
         Optional<Question> qByF = questionRepository.findByIdAndFormulaireId(idQ, idF);
         qByF.get().setContenu(questionEdited.getContenu());
         formulaireRepository.save(formulaire);
-
 
 
         return new RedirectView("/forms/questions/{idF}");
@@ -137,7 +125,7 @@ public class QuestionController {
         Formulaire formulaire = formulaireRepository.findById(id).get();
         model.addAttribute("formul", formulaire);
         model.addAttribute("idForm", id);
-        model.addAttribute("nomForm",formulaire.getTitre());
+        model.addAttribute("nomForm", formulaire.getTitre());
         Collection<Question> questions = formulaire.getQuestions();
         model.addAttribute("questionsForAForm", questionRepository.findByFormulaire(formulaire));
         if (GiveAllAttributeToLayout()) return "layoutQuestionsByForm";

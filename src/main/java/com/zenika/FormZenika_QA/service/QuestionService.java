@@ -22,7 +22,6 @@ public class QuestionService {
     private FormulaireRepository formulaireRepository;
 
     public Page<Question> getAllQuestion(int page, int size, String mc) {
-        // return questionRepository.findAll(new PageRequest(page, size));
         return questionRepository.chercher("%" + mc + "%", new PageRequest(page, size));
     }
 
@@ -34,9 +33,6 @@ public class QuestionService {
 
         Optional<Formulaire> formFound = formulaireRepository.findById(idForm);
         Collection<Question> questionsByForm = formFound.orElse(null).getQuestions();
-        //questionsByForm.add(question);
-        // formFound.get().getQuestions().add(question);
-
         question.setFormulaire(formFound.get());
         questionRepository.save(question);
     }

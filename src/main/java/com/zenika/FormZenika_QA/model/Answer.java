@@ -6,8 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-public class Answer implements Serializable
-{
+public class Answer implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
@@ -24,8 +23,8 @@ public class Answer implements Serializable
     }
 
     public Answer(Long i, Question question) {
-        this.id=i;
-        this.question=question;
+        this.id = i;
+        this.question = question;
     }
 
     public Question getQuestionn() {
@@ -33,7 +32,7 @@ public class Answer implements Serializable
     }
 
     public void setQuestionn(Question questionn) {
-        this.question= questionn;
+        this.question = questionn;
     }
 
     public Answer(Long id, String response) {

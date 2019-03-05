@@ -33,7 +33,7 @@ public class User {
     private String lastName;
     @Column(name = "active")
     private int active;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
@@ -41,7 +41,7 @@ public class User {
     }
 
     @ManyToOne
-    @JoinColumn(name = "ID_FORM", insertable = false, updatable = false)
+    @JoinColumn(name = "ID_FORM")
     private Formulaire formulaire;
 
     public int getId() {
@@ -111,6 +111,15 @@ public class User {
     }
 
     public void setFormulaire(Formulaire formulaire) {
+        this.formulaire = formulaire;
+    }
+
+    public User(@Email(message = "*Please provide a valid Email") @NotEmpty(message = "*Please provide an email") String email, @Length(min = 5, message = "*Your password must have at least 5 characters") @NotEmpty(message = "*Please provide your password") String password, @NotEmpty(message = "*Please provide your name") String name, @NotEmpty(message = "*Please provide your last name") String lastName, int active, Formulaire formulaire) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.lastName = lastName;
+        this.active = active;
         this.formulaire = formulaire;
     }
 }

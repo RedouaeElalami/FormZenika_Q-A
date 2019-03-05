@@ -3,9 +3,11 @@ package com.zenika.FormZenika_QA.controller;
 import com.zenika.FormZenika_QA.model.Answer;
 import com.zenika.FormZenika_QA.model.Formulaire;
 import com.zenika.FormZenika_QA.model.Question;
+import com.zenika.FormZenika_QA.model.User;
 import com.zenika.FormZenika_QA.repository.AnswerRespository;
 import com.zenika.FormZenika_QA.repository.FormulaireRepository;
 import com.zenika.FormZenika_QA.repository.QuestionRepository;
+import com.zenika.FormZenika_QA.repository.UserRepository;
 import com.zenika.FormZenika_QA.wrapper.ResponseListWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -30,10 +32,13 @@ public class ResponsesQuestions
     private AnswerRespository answerRespository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private FormulaireRepository formulaireRepository;
 
     @GetMapping("/formulaire/{idForm}")
-    public String UserFormulaire(Model model,@PathVariable Long idForm)
+    public String userFormulaire(Model model,@PathVariable Long idForm)
     {
         if (returnFalse()) return "confirmation";
         Formulaire formulaireFound = formulaireRepository.findById(idForm).orElse(null);
@@ -45,8 +50,12 @@ public class ResponsesQuestions
 
             List<Answer> answers = new ArrayList<>();
 
-
-            int sizeQ = questionsByForm.size();
+            List<User> users = userRepository.findAll();
+                    for(User user:users)
+                    {
+                        user.setFormulaire(formulaireFound);
+                    }
+          int sizeQ = questionsByForm.size();
             for (int i = 0; i < sizeQ; i++) {
                 answers.add(new Answer());
                // answers.get(i).setQuestion(questionsByForm.get(i));

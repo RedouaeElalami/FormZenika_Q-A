@@ -1,5 +1,8 @@
 package com.zenika.FormZenika_QA.controller;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.zenika.FormZenika_QA.model.User;
@@ -14,6 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+
+import java.io.IOException;
 
 @Controller
 public class LoginController {
@@ -60,7 +66,7 @@ public class LoginController {
         return modelAndView;
     }
 
-    @GetMapping("/admin/home")
+    /*@GetMapping("/admin/home")
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -70,12 +76,39 @@ public class LoginController {
         modelAndView.setViewName("admin/home");
         return modelAndView;
     }
-
+*/
     @GetMapping("/403")
     public String accessDenied()
     {
         return "403";
     }
+
+
+        @GetMapping("/default")
+        public String defaultAfterLogin(HttpServletRequest request,Authentication authentication) {
+            String role = authentication.getAuthorities().toString();
+            System.out.println("role = " + role);
+            if(role.contains("ADMIN")){
+                return "redirect:/admin/forms";
+            }
+            else return "redirect:/403";
+        }
+
+ /*   @RequestMapping("/default")
+    public RedirectView loginPageRedirect(HttpServletRequest request, Authentication authResult)  {
+
+        String role =  authResult.getAuthorities().toString();
+        System.out.println("roleOf = " + role);
+
+        if(role.contains("ROLE_ADMIN")){
+            return new RedirectView("/admin/forms");
+        }
+        else if(role.contains("ROLE_USER")) {
+            return new RedirectView("/403");
+        }
+        return null;
+    }
+*/
 
 
 }

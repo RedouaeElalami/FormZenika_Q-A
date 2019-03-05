@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 @Data
 @Entity
-
 @Table(name = "role")
 public class Role {
     @Id
@@ -35,5 +34,8 @@ public class Role {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Role() {
     }
 }

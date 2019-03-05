@@ -3,16 +3,22 @@ package com.zenika.FormZenika_QA;
 import com.zenika.FormZenika_QA.model.*;
 import com.zenika.FormZenika_QA.repository.FormulaireRepository;
 import com.zenika.FormZenika_QA.repository.QuestionRepository;
+import com.zenika.FormZenika_QA.repository.RoleRepository;
 import com.zenika.FormZenika_QA.repository.UserRepository;
+import com.zenika.FormZenika_QA.security.configuration.WebMvcConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @SpringBootApplication
 public class FormZenikaQAApplication {
+
     public static void main(String[] args) {
         ApplicationContext ctx =
                 SpringApplication.run(FormZenikaQAApplication.class, args);
@@ -76,6 +82,34 @@ public class FormZenikaQAApplication {
         UserRepository userRepository = ctx.getBean(UserRepository.class);
         List<User> role_user = userRepository.findByRolesss(2l);
         System.out.println("role_user = " + role_user);*/
+/*
+
+        UserRepository userRepository = ctx.getBean(UserRepository.class);
+        List<User> userList = userRepository.findAll();
+        for(User user : userList)
+        {
+            user.setFormulaire(formulaire);
+        }
+        formulaire.setUser(userList);
+*/
+        UserRepository userRepository = ctx.getBean(UserRepository.class);
+
+        RoleRepository roleRepository = ctx.getBean(RoleRepository.class);
+
+
+        WebMvcConfig webMvcConfig = new WebMvcConfig();
+
+         BCryptPasswordEncoder bCryptPasswordEncoder = webMvcConfig.passwordEncoder();
+
+
+        User user = new User("redouaneelalami0@gmail.com","12345","redouane","elalami",1,formulaire);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        Role userRole = roleRepository.findByRole("ADMIN");
+        user.setRoles(new HashSet<>(Arrays.asList(userRole)));
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        formulaire.setUser(users);
+        userRepository.save(user);
 
 
     }

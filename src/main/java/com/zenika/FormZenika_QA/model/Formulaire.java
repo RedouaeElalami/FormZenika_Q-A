@@ -21,6 +21,10 @@ public class Formulaire {
     @JoinColumn(name = "ID_FORM", nullable = false, updatable = false)
     private List<Question> questions;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_FORM", nullable = false, updatable = false)
+    private List<User> user;
+
     public Formulaire() {
     }
 
@@ -65,5 +69,17 @@ public class Formulaire {
         this.titre = titre;
         this.description = description;
         this.questions = questions;
+    }
+
+    public List<User> getUser() {
+        return user;
+    }
+
+    public void setUser(List<User> user) {
+        this.user = user;
+    }
+
+    public Formulaire(List<User> user) {
+        this.user = user;
     }
 }

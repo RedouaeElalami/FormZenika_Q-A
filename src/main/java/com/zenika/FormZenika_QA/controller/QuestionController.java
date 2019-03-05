@@ -27,7 +27,7 @@ public class QuestionController {
     @Autowired
     private FormulaireRepository formulaireRepository;
 
-    @GetMapping("/forms/questions")
+    @GetMapping("/admin/forms/questions")
     public String getallQuestions(Model model,
                                   @RequestParam(name = "page", defaultValue = "0") int page,
                                   @RequestParam(name = "size", defaultValue = "20") int size,
@@ -44,23 +44,23 @@ public class QuestionController {
     }
 
 
-    @GetMapping("/forms/question/delete")
+    @GetMapping("/admin/forms/question/delete")
     public RedirectView deleteFromAllQuestions(Long id, String mc,
                                                int page, int size) {
         questionService.delete(id);
         return new RedirectView
-                ("/forms/questions?page=" + page +
+                ("/admin/forms/questions?page=" + page +
                         "&size=" + size + "&mc=" + mc);
     }
 
-    @GetMapping("/forms/{idForm}/question/delete/{idQuestion}")
+    @GetMapping("/admin/forms/{idForm}/question/delete/{idQuestion}")
     public RedirectView deleteQuestionByForm(@PathVariable Long idQuestion
             , @PathVariable Long idForm) {
         questionService.delete(idQuestion);
-        return new RedirectView("/forms/questions/{idForm}");
+        return new RedirectView("/admin/forms/questions/{idForm}");
     }
 
-    @GetMapping("/forms/formQuestion/{id}")
+    @GetMapping("/admin/forms/formQuestion/{id}")
     public String FormAddQuestion(Model model, @PathVariable Long id) {
 
         System.out.println("id= " + id);
@@ -75,7 +75,7 @@ public class QuestionController {
     }
 
 
-    @GetMapping("/forms/{idForm}/question/edit/{idQuestion}")
+    @GetMapping("/admin/forms/{idForm}/question/edit/{idQuestion}")
     public String editQuestionbyForm(Model model, @PathVariable Long idForm, @PathVariable Long idQuestion) {
         Question question = questionService.findEditedQuestion(idQuestion, idForm);
         model.addAttribute("questionEdited", question);
@@ -83,7 +83,7 @@ public class QuestionController {
     }
 
     //bindingResult collection pour stocker les erreurs
-    @PostMapping("/forms/questions/save/{id}")
+    @PostMapping("/admin/forms/questions/save/{id}")
     public RedirectView save(@Valid Question q, BindingResult bindingResult, @PathVariable Long id) {
         if (bindingResult.hasErrors())
             return new RedirectView("/forms/formQuestion/{id}");
@@ -93,15 +93,15 @@ public class QuestionController {
         }
         System.out.println("q = " + q.getId());
         formulaireRepository.save(formulaire);
-        return new RedirectView("/forms/questions/{id}");
+        return new RedirectView("/admin/forms/questions/{id}");
     }
 
-    @PostMapping("/forms/{idF}/questions/{idQ}/save")
+    @PostMapping("/admin/forms/{idF}/questions/{idQ}/save")
     public RedirectView saveEditQuestion(
             @Valid Question questionEdited, BindingResult bindingResult
             , @PathVariable Long idQ, @PathVariable Long idF) {
         if (bindingResult.hasErrors())
-            return new RedirectView("/forms/formQuestion/{idF}");
+            return new RedirectView("/admin/forms/formQuestion/{idF}");
 
 
         Formulaire formulaire = formulaireRepository.findById(idF).orElse(null);
@@ -111,16 +111,18 @@ public class QuestionController {
         formulaireRepository.save(formulaire);
 
 
-        return new RedirectView("/forms/questions/{idF}");
+        return new RedirectView("/admin/forms/questions/{idF}");
     }
+/*
 
     @GetMapping("/")
     public RedirectView home() {
         return new RedirectView("questions");
     }
+*/
 
 
-    @GetMapping("/forms/questions/{id}")
+    @GetMapping("/admin/forms/questions/{id}")
     public String getAllQuestionByFormId(Model model, @PathVariable Long id) {
         Formulaire formulaire = formulaireRepository.findById(id).get();
         model.addAttribute("formul", formulaire);
@@ -133,7 +135,7 @@ public class QuestionController {
         return "questionsByForm";
     }
 
-    @GetMapping("/form/{idForm}/done")
+    @GetMapping("/admin/form/{idForm}/done")
     public String confirmSendFormulaire(@PathVariable Long idForm, Model model) {
         Formulaire formulaire = formulaireRepository.findById(idForm).get();
         List<Question> questionsByFormulaire = questionRepository.findByFormulaire(formulaire);

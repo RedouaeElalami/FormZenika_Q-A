@@ -20,7 +20,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">Ajouter une question</div>
             <div class="panel-body">
-                <form th:action="@{'/forms/questions/save/'+${questionAttribute.getFormulaire().getId()}}"
+                <form th:action="@{'/admin/forms/questions/save/'+${questionAttribute.getFormulaire().getId()}}"
                       method="post">
                     <div class="form-group">
                         <label class="control-label">Question :</label>

@@ -23,10 +23,10 @@
         <!--        menu fluid-->
         <div class="container-fluid">
             <ul class="nav navbar-nav">
-                <li><a th:href="@{/forms/addFormulaire}">Ajouter un formulaire</a></li>
-                <li><a th:href="@{/forms/questions}">Visualisez tous les questions</a></li>
+                <li><a th:href="@{/admin/forms/addFormulaire}">Ajouter un formulaire</a></li>
+                <li><a th:href="@{/admin/forms/questions}">Visualisez tous les questions</a></li>
                 <li>
-                    <a th:href="@{/forms//logout}" th:inline="text">
+                    <a th:href="@{/logout}" th:inline="text">
                         [[${#httpServletRequest.remoteUser}]]
                     </a></li>
             </ul>
@@ -40,9 +40,16 @@
 <footer class="navbar-fixed-bottom">
     <hr/>
     <div class="container">
-        <small>
-            copyright Zenika @2019
-        </small>
+
+        <div id="footer">
+            <div class="container text-center">
+                <small class="text-muted credit" style="color:#ff1816" th:text="
+                          'copyright Zenika @' + ${#calendars.format(#calendars.createNow(), 'yyyy')}
+  ">
+                </small>
+            </div>
+        </div>
+
     </div>
 
 </footer>

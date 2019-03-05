@@ -19,7 +19,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">Ajouter une question</div>
             <div class="panel-body">
-                <form th:action="@{'/forms/'+${questionEdited.getFormulaire().getId()}+'/questions/'+${questionEdited.id}+'/save/'}"
+                <form th:action="@{'/admin/forms/'+${questionEdited.getFormulaire().getId()}+'/questions/'+${questionEdited.id}+'/save/'}"
                       method="post">
                         <input class="form-control" type="hidden" name="id"
                                th:value="${questionEdited.id}"/>

@@ -23,9 +23,9 @@
         <!--        menu fluid-->
         <div class="container-fluid">
             <ul class="nav navbar-nav">
-                <li><a th:href="@{/forms}">Formulaires</a></li>
+                <li><a th:href="@{/admin/forms}">Formulaires</a></li>
                 <li>
-                    <a th:href="@{/forms/logout}" th:inline="text">
+                    <a th:href="@{/logout}" th:inline="text">
                         [[${#httpServletRequest.remoteUser}]]
                     </a></li>
             </ul>
@@ -38,8 +38,8 @@
 </section>
 <footer class="navbar-fixed-bottom">
     <hr/>
-    <div class="container">
-        <small>
+    <div class="container text-center">
+        <small class="text-muted credit" style="color:#ff1816">
             copyright Zenika @2019
         </small>
     </div>

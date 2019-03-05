@@ -8,6 +8,8 @@ import com.zenika.FormZenika_QA.repository.FormulaireRepository;
 import com.zenika.FormZenika_QA.repository.QuestionRepository;
 import com.zenika.FormZenika_QA.wrapper.ResponseListWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class ResponsesQuestions
@@ -29,7 +33,7 @@ public class ResponsesQuestions
     private FormulaireRepository formulaireRepository;
 
     @GetMapping("/formulaire/{idForm}")
-    public String formualireForUser(Model model,@PathVariable Long idForm)
+    public String UserFormulaire(Model model,@PathVariable Long idForm)
     {
         if (returnFalse()) return "confirmation";
         Formulaire formulaireFound = formulaireRepository.findById(idForm).orElse(null);
@@ -67,6 +71,8 @@ public class ResponsesQuestions
             // answers.get(i).setQuestion(questionsByForm.get(i));
            // answerRespository.save(answers.get(i));
 
+
+
         }
 
         formulaire.setQuestions(questions);
@@ -88,5 +94,20 @@ public class ResponsesQuestions
         if(false) return true;
         return false;
     }
+
+  /*  public static boolean hasRole (String roleName)
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Set<String> roles = authentication.getAuthorities().stream()
+                .map(r -> r.getAuthority()).collect(Collectors.toSet());
+
+        System.out.println("roles = " + roles);
+        return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(roleName));
+    }*/
+
+
+
 
 }

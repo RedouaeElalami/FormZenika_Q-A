@@ -1,19 +1,14 @@
 package com.zenika.FormZenika_QA;
 
-import com.zenika.FormZenika_QA.model.Answer;
-import com.zenika.FormZenika_QA.model.Formulaire;
-import com.zenika.FormZenika_QA.model.Question;
+import com.zenika.FormZenika_QA.model.*;
 import com.zenika.FormZenika_QA.repository.FormulaireRepository;
 import com.zenika.FormZenika_QA.repository.QuestionRepository;
+import com.zenika.FormZenika_QA.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @SpringBootApplication
@@ -74,10 +69,15 @@ public class FormZenikaQAApplication {
         fr.save(new Formulaire("formualire Question Response","test redouane for answers",questionList));
 
 
+    /*    UserRepository userRepository = ctx.getBean(UserRepository.class);
+        List<User> user = userRepository.findUsersByRoles();
+        System.out.println("user = " + user);*/
+/*
+        UserRepository userRepository = ctx.getBean(UserRepository.class);
+        List<User> role_user = userRepository.findByRolesss(2l);
+        System.out.println("role_user = " + role_user);*/
 
 
     }
-
-
 }
 

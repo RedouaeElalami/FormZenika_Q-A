@@ -29,7 +29,7 @@
 
             <blockquote class=" well">
                 <h4 style="color: #2b542c" th:text="${formul.description}"></h4>
-                <a  th:href="@{/forms/edit(id=${formul.getId()})}">
+                <a  th:href="@{/admin/forms/edit(id=${formul.getId()})}">
                     <button type="submit" style="float: right" class="btn btn-warning btn-sm margeBottomButton">Modifier</button>
                 </a>
             </blockquote>
@@ -46,12 +46,12 @@
                     <td th:text="${status.index+1}"></td>
                     <td th:text="${contenu.contenu}"></td>
                     <td><a
-                            th:href="@{'/forms/'+${idForm}+'/question/edit/'+${contenu.id}}">edit
+                            th:href="@{'/admin/forms/'+${idForm}+'/question/edit/'+${contenu.id}}">edit
                     </a>
                     </td>
                     <td>
                         <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette contenu ?')"
-                           th:href="@{'/forms/'+${idForm}+'/question/delete/'+${contenu.id}}">
+                           th:href="@{'/admin/forms/'+${idForm}+'/question/delete/'+${contenu.id}}">
                             Delete
                         </a>
                     </td>
@@ -62,7 +62,7 @@
 
                 </tfoot>
             </table>
-            <form th:action="@{'/form/'+${idForm}+'/done'}" method="get">
+            <form th:action="@{'/admin/form/'+${idForm}+'/done'}" method="get">
                 <button type="submit" style="float: right" class="btn btn-success">Done</button>
 
             </form>

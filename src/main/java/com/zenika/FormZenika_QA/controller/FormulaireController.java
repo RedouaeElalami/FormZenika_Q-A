@@ -21,7 +21,7 @@ public class FormulaireController {
     @Autowired
     private FormulaireService formulaireService;
 
-    @GetMapping("/forms")
+    @GetMapping("/admin/forms")
     public String getAllFormulairs(Model model,
                                    @RequestParam(name = "page", defaultValue = "0") int page,
                                    @RequestParam(name = "size", defaultValue = "20") int size,
@@ -36,7 +36,7 @@ public class FormulaireController {
         return "formulaireHOME";
     }
 
-    @GetMapping("/forms/addFormulaire")
+    @GetMapping("/admin/forms/addFormulaire")
     public String FormAddQuestion(Model model) {
         String title = null;
         ArrayList<Question> questions = new ArrayList<>();
@@ -46,27 +46,27 @@ public class FormulaireController {
         return "AddForm";
     }
 
-    @PostMapping("/forms/save")
+    @PostMapping("/admin/forms/save")
     public RedirectView save(@Valid Formulaire f, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return new RedirectView("/forms/addFormulaire");
+            return new RedirectView("/admin/forms/addFormulaire");
         formulaireService.addformulaire(f);
-        return new RedirectView("/forms");
+        return new RedirectView("/admin/forms");
     }
 
-    @GetMapping("/forms/edit")
+    @GetMapping("/admin/forms/edit")
     public String edit(Model model, Long id) {
         Formulaire formulaire = formulaireService.updateFormulaire(id);
         model.addAttribute("formulaireEdited", formulaire);
         return "EditFormulaire";
     }
 
-    @GetMapping("/forms/delete")
+    @GetMapping("/admin/forms/delete")
     public RedirectView delete(Long id, String mc,
                                int page, int size) {
         formulaireService.delete(id);
         return new RedirectView
-                ("/forms?page=" + page +
+                ("/admin/forms?page=" + page +
                         "&size=" + size + "&mc=" + mc);
     }
 }

@@ -10,10 +10,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
+
 <p></p>
+
 <div layout:fragment="content">
+
     <div class="container">
-        <form th:action="@{/forms}" method="get">
+        <form th:action="@{/admin/forms}" method="get">
             <label>mot clé</label>
             <input type="text" name="mc" th:value="${motCleForm}"/>
             <button class="btn btn-primary">chercher</button>
@@ -35,16 +38,16 @@
                     <!--
                                     <a th:href="@{/forms/questions(id=${formulaire.id})}"
                     -->
-                    <a th:href="@{'/forms/questions/'+${formulaire.id}}"
+                    <a th:href="@{'/admin/forms/questions/'+${formulaire.id}}"
                        th:text="${formulaire.titre}"></a>
                 </td>
                 <td><a
-                        th:href="@{/forms/edit(id=${formulaire.id})}">edit
+                        th:href="@{/admin/forms/edit(id=${formulaire.id})}">edit
 
                 </a></td>
                 <td>
                     <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette contenu ?')"
-                       th:href="@{/forms/delete(id=${formulaire.getId()},page=${pageCourantForm},
+                       th:href="@{/admin/forms/delete(id=${formulaire.getId()},page=${pageCourantForm},
                 size=${sizeForm},mc=${motCleForm})}">
                         Delete
                     </a>
@@ -58,7 +61,7 @@
         <ul class="nav nav-pills">
             <li th:class="${pageCourantForm}==${status.index} ? 'active':''"
                 th:each="page,status:${allPagesForm}">
-                <a th:href="@{/forms/(page=${status.index},size=${sizeForm},mc=${motCleForm})}"
+                <a th:href="@{/admin/forms/(page=${status.index},size=${sizeForm},mc=${motCleForm})}"
                    th:text="${status.index}"></a>
             </li>
         </ul>

@@ -13,7 +13,7 @@
 <p></p>
 <div layout:fragment="content">
     <div class="container">
-        <form th:action="@{/forms/questions}" method="get">
+        <form th:action="@{/admin/forms/questions}" method="get">
             <label>mot clé</label>
             <input type="text" name="mc" th:value="${motCle}"/>
             <button class="btn btn-primary">chercher</button>
@@ -32,17 +32,6 @@
             <tr th:each="contenu,status:${questions}">
                 <td th:text="${status.index+1}"></td>
                 <td th:text="${contenu.contenu}"></td>
-                <td><a
-                        th:href="@{/forms/question/edit(id=${contenu.id})}">edit
-                    question
-                </a></td>
-                <td>
-                    <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette contenu ?')"
-                       th:href="@{/forms/question/delete(id=${contenu.getId()},page=${pageCourant},
-                size=${size},mc=${motCle})}">
-                        Delete
-                    </a>
-                </td>
 
             </tr>
             </tbody>
@@ -52,7 +41,7 @@
         <ul class="nav nav-pills">
             <li th:class="${pageCourant}==${status.index} ? 'active':''"
                 th:each="page,status:${allPages}">
-                <a th:href="@{/forms/questions(page=${status.index},size=${size},mc=${motCle})}"
+                <a th:href="@{/admin/forms/questions(page=${status.index},size=${size},mc=${motCle})}"
                    th:text="${status.index}"></a>
             </li>
         </ul>

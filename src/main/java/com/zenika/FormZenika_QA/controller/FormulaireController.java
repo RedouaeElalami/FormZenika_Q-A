@@ -50,14 +50,14 @@ public class FormulaireController {
     public RedirectView save(@Valid Formulaire f, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return new RedirectView("/admin/forms/addFormulaire");
-        formulaireService.addformulaire(f);
+        formulaireService.save(f);
         return new RedirectView("/admin/forms");
     }
 
     @GetMapping("/admin/forms/edit")
     public String edit(Model model, Long id) {
-        Formulaire formulaire = formulaireService.updateFormulaire(id);
-        model.addAttribute("formulaireEdited", formulaire);
+        Formulaire formFound = formulaireService.findFormulaire(id);
+        model.addAttribute("formulaireEdited", formFound);
         return "EditFormulaire";
     }
 

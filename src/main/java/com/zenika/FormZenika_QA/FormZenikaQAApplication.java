@@ -90,7 +90,7 @@ public class FormZenikaQAApplication {
         {
             user.setFormulaire(formulaire);
         }
-        formulaire.setUser(userList);
+        formulaire.setUsers(userList);
 */
         UserRepository userRepository = ctx.getBean(UserRepository.class);
 
@@ -108,7 +108,7 @@ public class FormZenikaQAApplication {
         user.setRoles(new HashSet<>(Arrays.asList(userRole)));
         List<User> users = new ArrayList<>();
         users.add(user);
-        formulaire.setUser(users);
+        formulaire.setUsers(users);
         userRepository.save(user);
 
 

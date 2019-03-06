@@ -5,7 +5,9 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Data
@@ -18,18 +20,18 @@ public class User {
     @Column(name = "user_id")
     private int id;
     @Column(name = "email")
-    @Email(message = "*Please provide a valid Email")
-    @NotEmpty(message = "*Please provide an email")
+    @Email(message = "*S'il vous plaît fournir un email valide")
+    @NotEmpty(message = "*veuillez fournir une adresse email")
     private String email;
     @Column(name = "password")
-    @Length(min = 5, message = "*Your password must have at least 5 characters")
-    @NotEmpty(message = "*Please provide your password")
+    @Length(min = 5, message = "*Votre mot de passe doit comporter au moins 5 caractères.")
+    @NotEmpty(message = "*S'il vous plaît fournir votre mot de passe")
     private String password;
     @Column(name = "name")
-    @NotEmpty(message = "*Please provide your name")
+    @NotEmpty(message = "*Veuillez fournir votre prénom")
     private String name;
     @Column(name = "last_name")
-    @NotEmpty(message = "*Please provide your last name")
+    @NotEmpty(message = "*Veuillez fournir votre nom")
     private String lastName;
     @Column(name = "active")
     private int active;
@@ -37,13 +39,13 @@ public class User {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public User() {
-    }
-
     @ManyToOne
     @JoinColumn(name = "ID_FORM")
+    @NotNull(message = "*Veuillez choisir un formulaire")
     private Formulaire formulaire;
 
+    public User() {
+    }
     public int getId() {
         return id;
     }
@@ -120,6 +122,16 @@ public class User {
         this.name = name;
         this.lastName = lastName;
         this.active = active;
+        this.formulaire = formulaire;
+    }
+
+    public User(@Email(message = "*S'il vous plaît fournir un email valide") @NotEmpty(message = "*veuillez fournir une adresse email") String email, @Length(min = 5, message = "*Votre mot de passe doit comporter au moins 5 caractères.") @NotEmpty(message = "*S'il vous plaît fournir votre mot de passe") String password, @NotEmpty(message = "*Veuillez fournir votre prénom") String name, @NotEmpty(message = "*Veuillez fournir votre nom") String lastName, int active, Set<Role> roles, @NotNull(message = "*Veuillez choisir un formulaire") Formulaire formulaire) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.lastName = lastName;
+        this.active = active;
+        this.roles = roles;
         this.formulaire = formulaire;
     }
 }

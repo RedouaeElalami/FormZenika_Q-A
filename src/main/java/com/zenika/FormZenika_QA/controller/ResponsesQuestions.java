@@ -16,10 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -50,11 +48,6 @@ public class ResponsesQuestions
 
             List<Answer> answers = new ArrayList<>();
 
-            List<User> users = userRepository.findAll();
-                    for(User user:users)
-                    {
-                        user.setFormulaire(formulaireFound);
-                    }
           int sizeQ = questionsByForm.size();
             for (int i = 0; i < sizeQ; i++) {
                 answers.add(new Answer());
@@ -91,7 +84,7 @@ public class ResponsesQuestions
         // model.addAttribute("AllAnswers", answerRespository.findAll());
 
         //System.out.println("answer = " + answer);
-        return "403";
+        return "sendAnswers";
     }
 
  /*   public ModelAndView doUpdateSetCharges(@RequestBody List<EntSetCharges> tempEntSetChargesList){
@@ -116,7 +109,40 @@ public class ResponsesQuestions
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(roleName));
     }*/
 
+    @GetMapping("/default")
+    public String defaultAfterLogin(HttpServletRequest request, Authentication authentication,Long id) {
 
+        id= 1L;
+
+        List<User> users = userRepository.findAll();
+        String userEmail = authentication.getName();
+
+        Optional<User> userFound = users
+                .stream()
+                .filter(u-> userEmail.equals(u.getEmail()))
+                .findFirst();
+        System.out.println("userFound = " + userFound);
+        Long idFormOfUser = userFound.get().getFormulaire().getId();
+
+        //   User principal = (User) authentication.getPrincipal();
+    //    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+      //  System.out.println("user = " + user);
+      //  System.out.println("principal = " + principal);
+        System.out.println("id = " + id);
+        if (false) return "registration";
+
+        String role = authentication.getAuthorities().toString();
+        Object details = authentication.getDetails();
+        System.out.println("role = " + role);
+        if(role.contains("ADMIN")){
+            return "redirect:/admin/forms";
+        }
+        else
+        {
+
+            return "redirect:/formulaire/"+idFormOfUser;}
+
+    }
 
 
 }

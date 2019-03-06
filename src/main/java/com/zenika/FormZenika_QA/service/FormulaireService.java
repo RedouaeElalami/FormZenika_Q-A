@@ -19,11 +19,11 @@ public class FormulaireService {
 
     }
 
-    public void addformulaire(Formulaire formulaire) {
+    public void save(Formulaire formulaire) {
         formulaireRepository.save(formulaire);
     }
 
-    public Formulaire updateFormulaire(Long id) {
+    public Formulaire findFormulaire(Long id) {
         Optional<Formulaire> optionalFormulaire = formulaireRepository.findById(id);
         return optionalFormulaire.get();
     }

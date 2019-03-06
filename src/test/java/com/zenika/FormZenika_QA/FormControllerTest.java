@@ -8,8 +8,6 @@ import com.zenika.FormZenika_QA.repository.FormulaireRepository;
 import com.zenika.FormZenika_QA.repository.QuestionRepository;
 import com.zenika.FormZenika_QA.service.FormulaireService;
 import com.zenika.FormZenika_QA.service.QuestionService;
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,7 +75,7 @@ public class FormControllerTest {
 
 
         //when
-        formulaireService.addformulaire(formulaire);
+        formulaireService.save(formulaire);
         Optional<Formulaire> foundForm = formulaireRepository.findById(formulaire.getId());
         //Then
         assertThat(foundForm.get().getTitre()).isEqualTo(formulaire.getTitre());

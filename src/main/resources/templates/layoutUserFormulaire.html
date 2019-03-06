@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html
         xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        >
 <head>
     <meta charset="utf-8">
-    <title>Form</title>
+    <title>Questionnaire</title>
     <link rel="stylesheet" type="text/css"
           href="../static/css/bootstrap.min.css"
           th:href="@{/css/bootstrap.min.css}">
@@ -22,10 +23,8 @@
     <div class="navbar navbar-inverse">
         <!--        menu fluid-->
         <div class="container-fluid">
-            <ul class="nav navbar-nav">
-                <li><a th:href="@{/admin/forms/addFormulaire}">Ajouter un formulaire</a></li>
-                <li><a th:href="@{/admin/forms/questions}">Visualisez tous les questions</a></li>
-                <li class="navbar-right">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
                     <a th:href="@{/login?logout}" th:inline="text">
                         Logout
                     </a>
@@ -38,22 +37,7 @@
 <section layout:fragment="content">
 
 </section>
-<footer class="navbar-fixed-bottom">
-    <hr/>
-    <div class="container">
 
-        <div id="footer">
-            <div class="container text-center">
-                <small class="text-muted credit" style="color:#ff1816" th:text="
-                          'copyright Zenika @' + ${#calendars.format(#calendars.createNow(), 'yyyy')}
-  ">
-                </small>
-            </div>
-        </div>
-
-    </div>
-
-</footer>
 
 </body>
 </html>

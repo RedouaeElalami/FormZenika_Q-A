@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html
         xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        >
 <head>
     <meta charset="utf-8">
     <title>Questionnaire</title>
@@ -24,13 +25,15 @@
         <div class="container-fluid">
             <ul class="nav navbar-nav">
                 <li><a th:href="@{/admin/forms}">Formulaires</a></li>
+                <div class="navbar-right">
                 <li>
-                    <a th:href="@{/logout}" th:inline="text">
-                        [[${#httpServletRequest.remoteUser}]]
-                    </a></li>
+                    <a th:href="@{/login?logout}" th:inline="text">
+                        Logout
+                    </a>
+                </li>
+                </div>
             </ul>
         </div>
-
     </div>
 </header>
 <section layout:fragment="content">

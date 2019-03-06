@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layoutUserFormulaire"
 >
 <head>
     <title>Questions</title>
@@ -20,6 +21,9 @@
 
 <body style="background-color:#ffffff;">
 <p></p>
+
+<div layout:fragment="content">
+
 
 <div align="center">
     <img th:src="@{/css/zenika.png}" class="img-rounded" alt="Zenika">
@@ -80,6 +84,7 @@
 
         </form>
     </div>
+</div>
 </div>
 </body>
 </html>

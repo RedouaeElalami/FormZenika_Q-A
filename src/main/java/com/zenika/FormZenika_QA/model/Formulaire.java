@@ -23,7 +23,7 @@ public class Formulaire {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_FORM")
-    private List<User> user;
+    private List<User> users;
 
     public Formulaire() {
     }
@@ -71,15 +71,17 @@ public class Formulaire {
         this.questions = questions;
     }
 
-    public List<User> getUser() {
-        return user;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUser(List<User> user) {
-        this.user = user;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
-    public Formulaire(List<User> user) {
-        this.user = user;
+    public Formulaire(List<User> users) {
+        this.users = users;
     }
+
+
 }

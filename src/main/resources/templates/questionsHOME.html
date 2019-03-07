@@ -30,8 +30,8 @@
             </thead>
             <tbody>
             <tr th:each="contenu,status:${questions}">
-                <td th:text="${status.index+1}"></td>
-                <td th:text="${contenu.contenu}"></td>
+                <td style="text-align:center" th:text="${status.index+1}"></td>
+                <td style="text-align:center" th:text="${contenu.contenu}"></td>
 
             </tr>
             </tbody>

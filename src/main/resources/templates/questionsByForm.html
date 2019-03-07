@@ -43,13 +43,13 @@
                 </thead>
                 <tbody>
                 <tr th:each="contenu,status:${questionsForAForm}">
-                    <td th:text="${status.index+1}"></td>
-                    <td th:text="${contenu.contenu}"></td>
-                    <td><a
+                    <td style="text-align:center" th:text="${status.index+1}"></td>
+                    <td style="text-align:center" th:text="${contenu.contenu}"></td>
+                    <td style="text-align:center"><a
                             th:href="@{'/admin/forms/'+${idForm}+'/question/edit/'+${contenu.id}}">edit
                     </a>
                     </td>
-                    <td>
+                    <td style="text-align:center">
                         <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette contenu ?')"
                            th:href="@{'/admin/forms/'+${idForm}+'/question/delete/'+${contenu.id}}">
                             Delete

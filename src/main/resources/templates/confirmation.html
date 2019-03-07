@@ -28,8 +28,8 @@
             </thead>
             <tbody>
             <tr class="info" th:each="questionForForm,status:${questionsByForm}">
-                <td width="10%" th:text="${status.index+1}"></td>
-                <td width="90%" th:text="${questionForForm.contenu}"></td>
+                <td style="text-align:center" width="10%" th:text="${status.index+1}"></td>
+                <td style="text-align:center" width="90%" th:text="${questionForForm.contenu}"></td>
             </tr>
             </tbody>
             <tfoot>

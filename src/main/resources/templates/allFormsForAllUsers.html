@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layoutFormulaire">
+<head>
+    <title>formulaires</title>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<p></p>
+
+<div layout:fragment="content">
+
+    <div class="container">
+        <form th:action="@{/admin/forms}" method="get">
+            <label>mot clé</label>
+            <input type="text" name="mc" th:value="${motCleOfForm}"/>
+            <button class="btn btn-primary">chercher</button>
+        </form>
+    </div>
+    <div class="container">
+        <h2>Formulaires</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>N°</th>
+                <th>titre</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="formulaire,status:${formulaires}">
+                <td style="text-align:center" th:text="${status.index+1}"></td>
+                <td style="text-align:center">
+                    <!--
+                                    <a th:href="@{/forms/questions(id=${formulaire.id})}"
+                    -->
+                    <a th:href="@{'/admin/forms/'+${formulaire.id}+'/users'}"
+                       th:text="${formulaire.titre}"></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <ul class="nav nav-pills">
+            <li th:class="${pageCourantOfForm}==${status.index} ? 'active':''"
+                th:each="page,status:${PagesOfFormd}">
+                <a th:href="@{/admin/forms/(page=${status.index},size=${sizeOfForm},mc=${motCleOfForm})}"
+                   th:text="${status.index}"></a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

@@ -14,4 +14,6 @@ public interface FormulaireRepository extends JpaRepository<Formulaire, Long> {
     @Query(value = "from Formulaire f where f.titre like :x")
     Page<Formulaire> chercher(@Param("x") String mc, Pageable pageable);
 
+
+
 }

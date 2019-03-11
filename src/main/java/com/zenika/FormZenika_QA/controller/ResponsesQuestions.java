@@ -10,6 +10,7 @@ import com.zenika.FormZenika_QA.repository.QuestionRepository;
 import com.zenika.FormZenika_QA.repository.UserRepository;
 import com.zenika.FormZenika_QA.wrapper.ResponseListWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,12 @@ public class ResponsesQuestions
     {
         if (returnFalse()) return "confirmation";
         Formulaire formulaireFound = formulaireRepository.findById(idForm).orElse(null);
+
+
+
+     //   model.addAttribute("userLogged",userFound.get());
+
+
         if (formulaireFound != null) {
             List<Question> questionsByForm = formulaireFound.getQuestions();
             model.addAttribute("AllQuestionsByForm", questionsByForm);
@@ -47,6 +54,7 @@ public class ResponsesQuestions
             ResponseListWrapper responseListWrapper = new ResponseListWrapper();
 
             List<Answer> answers = new ArrayList<>();
+         //   userFound.get().setAnswers(answers);
 
           int sizeQ = questionsByForm.size();
             for (int i = 0; i < sizeQ; i++) {
@@ -54,10 +62,20 @@ public class ResponsesQuestions
                // answers.get(i).setQuestion(questionsByForm.get(i));
             }
             responseListWrapper.setAnswers(answers);
+
+
             //  model.addAttribute("AllAnswers", answerRespository.findAll());
             model.addAttribute("responseWrapper", responseListWrapper);
         }
         return "formulaireUser";
+    }
+
+    private String returnEmailOfLoggedUser(String userEmail) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+             userEmail = authentication.getName();
+        }
+        return userEmail;
     }
 
     @PostMapping("/formulaire/{id}/send")
@@ -65,20 +83,44 @@ public class ResponsesQuestions
     {
         Formulaire formulaire = formulaireRepository.getOne(id);
         List<Question> questions = formulaire.getQuestions();
-        List<Answer> answers = responseListWrapper.getAnswers();
 
-        for (int i = 0; i < questions.size(); i++) {
-            questions.get(i).setAnswer(answers.get(i));
+        String userEmail = null;
+
+        userEmail = returnEmailOfLoggedUser(userEmail);
+
+        List<User> users = userRepository.findAll();
+        //  String finalUserEmail = userEmail;
+        String finalUserEmail = userEmail;
+        Optional<User> userFound = users
+                .stream()
+                .filter(u-> finalUserEmail.equals(u.getEmail()))
+                .findFirst();
+
+
+        List<Answer> answers = responseListWrapper.getAnswers();
+        userFound.get().setAnswers(answers);
+
+        for (int i = 0; i < answers.size(); i++) {
+              answers.get(i).setQuestion(questions.get(i));
+            // answers.get(i).setQuestion(questionsByForm.get(i));
+        }
+
+
+
+       /* for (int i = 0; i < questions.size(); i++) {
+         //   questions.get(i).setAnswer(answers.get(i));
             System.out.println("answers = " + responseListWrapper);
             // answers.get(i).setQuestion(questionsByForm.get(i));
            // answerRespository.save(answers.get(i));
+        }*/
+
+        userRepository.save(userFound.get());
 
 
 
-        }
-
-        formulaire.setQuestions(questions);
-        questionRepository.saveAll(questions);
+       // answerRespository.saveAll(answers);
+       // formulaire.setQuestions(questions);
+      //  questionRepository.saveAll(questions);
 
 
         // model.addAttribute("AllAnswers", answerRespository.findAll());

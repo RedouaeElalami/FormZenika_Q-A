@@ -8,6 +8,8 @@ import com.zenika.FormZenika_QA.repository.UserRepository;
 import com.zenika.FormZenika_QA.service.FormulaireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +54,8 @@ public class FormUsersController
     public String usersByFormulaire(@PathVariable("idForm") Long idForm, Model model)
     {
         Optional<Formulaire> formulaire = formulaireRepository.findById(idForm);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+       // authentication.getAuthorities().toString();
         List<User> userByForm = userRepository.findByFormulaire(formulaire.orElse(null));
         model.addAttribute("formlaireUsers",formulaire.get());
         model.addAttribute("usersByForm",userByForm);

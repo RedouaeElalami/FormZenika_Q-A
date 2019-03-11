@@ -45,7 +45,7 @@
 
                     <tr th:each="question,stat:${AllQuestionsByForm}">
                         <div th:if="${itemStat.index==stat.index}">
-                            <td style="text-align:center" th:text="${stat.index+1}+'- '+ ${question.contenu}"
+                            <td  th:text="${stat.index+1}+'- '+ ${question.contenu}"
                                 style="font-size:25px;font-family:verdana,fantasy;color:#16030e;"
                             ></td>
                         </div>

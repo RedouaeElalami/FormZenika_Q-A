@@ -18,7 +18,7 @@ public class Formulaire {
     private String description;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ID_FORM", nullable = false, updatable = false)
+    @JoinColumn(name = "ID_FORM")
     private List<Question> questions;
 
     @OneToMany(cascade = CascadeType.ALL)

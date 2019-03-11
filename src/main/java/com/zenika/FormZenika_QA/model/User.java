@@ -52,6 +52,22 @@ public class User {
 
     public User() {
     }
+
+    public User(@Email(message = "*S'il vous plaît fournir un email valide") @NotEmpty(message = "*veuillez fournir une adresse email") String email, @Length(min = 5, message = "*Votre mot de passe doit comporter au moins 5 caractères.") @NotEmpty(message = "*S'il vous plaît fournir votre mot de passe") String password, @NotNull(message = "*Veuillez choisir un formulaire") Formulaire formulaire, List<Answer> answers) {
+        this.email = email;
+        this.password = password;
+        this.formulaire = formulaire;
+        this.answers = answers;
+    }
+
+    public User(@Email(message = "*S'il vous plaît fournir un email valide") @NotEmpty(message = "*veuillez fournir une adresse email") String email, @Length(min = 5, message = "*Votre mot de passe doit comporter au moins 5 caractères.") @NotEmpty(message = "*S'il vous plaît fournir votre mot de passe") String password, @NotEmpty(message = "*Veuillez fournir votre prénom") String name, @NotEmpty(message = "*Veuillez fournir votre nom") String lastName, int active) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.lastName = lastName;
+        this.active = active;
+    }
+
     public int getId() {
         return id;
     }

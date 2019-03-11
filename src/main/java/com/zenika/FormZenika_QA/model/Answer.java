@@ -16,7 +16,7 @@ public class Answer implements Serializable {
     @NotBlank
     private String response;
 
-    @OneToOne(mappedBy = "answer")
+    @ManyToOne
     private Question question;
 
     @ManyToOne()
@@ -31,13 +31,7 @@ public class Answer implements Serializable {
         this.question = question;
     }
 
-    public Question getQuestionn() {
-        return question;
-    }
 
-    public void setQuestionn(Question questionn) {
-        this.question = questionn;
-    }
 
     public Answer(Long id, String response) {
         this.id = id;
@@ -109,4 +103,11 @@ public class Answer implements Serializable {
         this.response = response;
         this.user = user;
     }
+
+    public Answer(Question question, User user) {
+        this.question = question;
+        this.user = user;
+    }
+
+
 }

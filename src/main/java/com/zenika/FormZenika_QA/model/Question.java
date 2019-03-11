@@ -8,11 +8,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "questions")
-public class Question {
+public class Question implements Cloneable {
 
     @Id
     @GeneratedValue
@@ -27,20 +28,20 @@ public class Question {
     @JoinColumn(name = "ID_FORM", insertable = false, updatable = false)
     private Formulaire formulaire;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(unique = true)
-    private Answer answer;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn( name = "question_id")
+    private List<Answer> answers;
 
-    public Question(@NotNull @NotBlank String contenu, Formulaire formulaire, Answer answer) {
+  /*  public Question(@NotNull @NotBlank String contenu, Formulaire formulaire, Answer answer) {
         this.contenu = contenu;
         this.formulaire = formulaire;
         this.answer = answer;
-    }
+    }*/
 
-    public Question(@NotNull @NotBlank String contenu, Answer answer) {
+/*    public Question(@NotNull @NotBlank String contenu, Answer answer) {
         this.contenu = contenu;
         this.answer = answer;
-    }
+    }*/
 
     public Question() {
     }
@@ -94,12 +95,45 @@ public class Question {
         return Objects.hash(id, contenu, formulaire);
     }
 
-    public Answer getAnswer() {
+   /* public Answer getAnswer() {
         return answer;
     }
 
     public void setAnswer(Answer answer) {
         this.answer = answer;
+    }*/
+
+    public Question(List<Answer> answers) {
+        this.answers = answers;
+    }
+
+    public Question(Formulaire formulaire, List<Answer> answers) {
+        this.formulaire = formulaire;
+        this.answers = answers;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Question clone = null;
+        try
+        {
+            clone = (Question) super.clone();
+
+            //Copy new date object to cloned method
+        }
+        catch (CloneNotSupportedException e)
+        {
+            throw new RuntimeException(e);
+        }
+        return clone;
     }
 
 

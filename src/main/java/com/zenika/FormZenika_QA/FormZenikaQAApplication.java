@@ -1,10 +1,7 @@
 package com.zenika.FormZenika_QA;
 
 import com.zenika.FormZenika_QA.model.*;
-import com.zenika.FormZenika_QA.repository.FormulaireRepository;
-import com.zenika.FormZenika_QA.repository.QuestionRepository;
-import com.zenika.FormZenika_QA.repository.RoleRepository;
-import com.zenika.FormZenika_QA.repository.UserRepository;
+import com.zenika.FormZenika_QA.repository.*;
 import com.zenika.FormZenika_QA.security.configuration.WebMvcConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,6 +29,7 @@ public class FormZenikaQAApplication {
 				findAll()
 				.forEach(q-> System.out.println("questionAttribute = " + q.getContenu()));*/
         UserRepository userRepository = ctx.getBean(UserRepository.class);
+        AnswerRespository answerRespository = ctx.getBean(AnswerRespository.class);
         RoleRepository roleRepository = ctx.getBean(RoleRepository.class);
         WebMvcConfig webMvcConfig = new WebMvcConfig();
         BCryptPasswordEncoder bCryptPasswordEncoder = webMvcConfig.passwordEncoder();
@@ -55,6 +53,7 @@ public class FormZenikaQAApplication {
                           "Notre manifeste pédagogique porte une vision, une #ethique et une volonté de différenciation";
         Formulaire formulaire = new Formulaire("Zenika Acamdemy recrutement 2019",description1, questions);
         fr.save(formulaire);
+
         Question q10 = new Question("Quelle est la critique la plus constructive qu’on a été amené à vous faire ?");
         Question q11 = new Question("Si vous pouviez revenir dans le passé, feriez-vous différemment certaines choses ?");
         Question q12 = new Question("Quels sont vos axes d’amélioration ?");
@@ -66,41 +65,92 @@ public class FormZenikaQAApplication {
         questions2.add(q13);
 
 
+        Role userRole = roleRepository.findByRole("ADMIN");
+
+        List<User> users = new ArrayList<>();
 
 
-        String desciption2 = "Le Labs, nouveau pôle de Zenika depuis un an, propose aux entreprises " +
+        User user = new User("redouaneelalami0@gmail.com","12345","redouane","elalami",1);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setRoles(new HashSet<>(Arrays.asList(userRole)));
+        Formulaire formulaire1 = new Formulaire();
+        fr.save(formulaire1);
+        user.setFormulaire(formulaire1);
+        users.add(user);
+    //    userRepository.save(user);
+
+        Role userRole2 = roleRepository.findByRole("USER");
+
+        /*User user2 = new User("redouaneelalami20@gmail.com","12345","redouane2","elalami2",1);
+        user2.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user2.setRoles(new HashSet<>(Arrays.asList(userRole2)));
+        user2.setFormulaire(formulaire);
+        users.add(user2)*/;
+
+        List<Answer> answerUser = new ArrayList<>();
+        List<Answer> answerUser2 = new ArrayList<>();
+        List<Answer> answersUser1 = new ArrayList<>();
+        user.setAnswers(answerUser2);
+       // user2.setAnswers(answerUser);
+
+        List<Question> formulaireQuestions = formulaire.getQuestions();
+        int i =0;
+
+        for(Question question : formulaireQuestions)
+        {
+            i++;
+          //  answerUser.add(new Answer(String.valueOf(i),question,user2));
+            answerUser2.add(new Answer(String.valueOf(i+2),question,user));
+
+        //    answersForOneQuestion.add(new Answer(String.valueOf(i),question,user2));
+           // question.setAnswers(answersQuestions);
+        }
+
+
+       // userRepository.save(user2);
+        userRepository.save(user);
+
+       // List<Answer> answerByUser2 = answerRespository.findByUser(user2);
+      //  System.out.println("answerByUser2 = " + answerByUser2);
+
+
+
+
+
+
+       /* String desciption2 = "Le Labs, nouveau pôle de Zenika depuis un an, propose aux entreprises " +
                 "une équipe “clé en main” (composée de 2 Développeurs, un UX/UI designer et un Product owner) pour kickstarter des projets et co-construire des MVP (Minimum Viable Product) sur une durée courte (jusqu’à 6 mois)" +
                 " avec un pilotage inspiré des approches agiles Lean StartUp, Lean UX et du mouvement Software Craftsmanship.  \n" +
                 "\n";
         Answer anQ = new Answer("Riennnnnnn");
         q10.setAnswer(anQ);
         Formulaire formulaire1 = new Formulaire("Zenika Labs", desciption2, questions2);
-        User user2 = new User("aaaa@gmail.com","12345","aaaa","aaaa",1,formulaire1);
-        user2.setPassword(bCryptPasswordEncoder.encode(user2.getPassword()));
+      //  User user2 = new User("aaaa@gmail.com","12345","aaaa","aaaa",1,formulaire1);
+       // user2.setPassword(bCryptPasswordEncoder.encode(user2.getPassword()));
         Role userRole2 = roleRepository.findByRole("ADMIN");
-        user2.setRoles(new HashSet<>(Arrays.asList(userRole2)));
+      //  user2.setRoles(new HashSet<>(Arrays.asList(userRole2)));
         List<User> users = new ArrayList<>();
-        users.add(user2);
-        formulaire1.setUsers(users);
-        user2.setFormulaire(formulaire1);
+      //  users.add(user2);
+       *//* formulaire1.setUsers(users);
+        user2.setFormulaire(formulaire1);*//*
 
         List<Answer> answers = new ArrayList<>();
         answers.lastIndexOf(anQ);
-        user2.setAnswers(answers);
+      //  user2.setAnswers(answers);
         fr.save(formulaire1);
-        userRepository.save(user2);
+      //  userRepository.save(user2);
         //	fr.save(new Formulaire(questionRepository.findAll()));
 
 
 
-    /*    UserRepository userRepository = ctx.getBean(UserRepository.class);
+    *//*    UserRepository userRepository = ctx.getBean(UserRepository.class);
         List<User> user = userRepository.findUsersByRoles();
-        System.out.println("user = " + user);*/
-/*
+        System.out.println("user = " + user);*//*
+*//*
         UserRepository userRepository = ctx.getBean(UserRepository.class);
         List<User> role_user = userRepository.findByRolesss(2l);
-        System.out.println("role_user = " + role_user);*/
-/*
+        System.out.println("role_user = " + role_user);*//*
+*//*
 
         UserRepository userRepository = ctx.getBean(UserRepository.class);
         List<User> userList = userRepository.findAll();
@@ -109,7 +159,7 @@ public class FormZenikaQAApplication {
             user.setFormulaire(formulaire);
         }
         formulaire.setUsers(userList);
-*/
+*//*
 
 
 
@@ -151,6 +201,8 @@ public class FormZenikaQAApplication {
         questionList.add(question2);
         fr.save(new Formulaire("formualire Question Response","test redouane for answers",questionList));
 
+
+*/
     }
 }
 

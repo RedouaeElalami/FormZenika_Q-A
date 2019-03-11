@@ -16,7 +16,7 @@
 <div layout:fragment="content">
 
     <div class="container">
-        <form th:action="@{/admin/forms}" method="get">
+        <form th:action="@{/admin/formsUsers}" method="get">
             <label>mot clé</label>
             <input type="text" name="mc" th:value="${motCleOfForm}"/>
             <button class="btn btn-primary">chercher</button>
@@ -49,7 +49,7 @@
         <ul class="nav nav-pills">
             <li th:class="${pageCourantOfForm}==${status.index} ? 'active':''"
                 th:each="page,status:${PagesOfFormd}">
-                <a th:href="@{/admin/forms/(page=${status.index},size=${sizeOfForm},mc=${motCleOfForm})}"
+                <a th:href="@{/admin/formsUsers/(page=${status.index},size=${sizeOfForm},mc=${motCleOfForm})}"
                    th:text="${status.index}"></a>
             </li>
         </ul>

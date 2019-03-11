@@ -19,6 +19,10 @@ public class Answer implements Serializable {
     @OneToOne(mappedBy = "answer")
     private Question question;
 
+    @ManyToOne()
+    @JoinColumn( name = "user_id")
+    private User user;
+
     public Answer() {
     }
 
@@ -81,5 +85,28 @@ public class Answer implements Serializable {
                 ", response='" + response + '\'' +
                 ", questionn=" + question +
                 '}';
+    }
+
+    public Answer(@NotNull @NotBlank String response, Question question, User user) {
+        this.response = response;
+        this.question = question;
+        this.user = user;
+    }
+
+    public Answer(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Answer(@NotNull @NotBlank String response, User user) {
+        this.response = response;
+        this.user = user;
     }
 }

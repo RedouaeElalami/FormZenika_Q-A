@@ -8,6 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -43,6 +44,11 @@ public class User {
     @JoinColumn(name = "ID_FORM")
     @NotNull(message = "*Veuillez choisir un formulaire")
     private Formulaire formulaire;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn( name = "user_id")
+    private List<Answer> answers;
+
 
     public User() {
     }
@@ -133,5 +139,33 @@ public class User {
         this.active = active;
         this.roles = roles;
         this.formulaire = formulaire;
+    }
+
+    public User(@Email(message = "*S'il vous plaît fournir un email valide") @NotEmpty(message = "*veuillez fournir une adresse email") String email, @Length(min = 5, message = "*Votre mot de passe doit comporter au moins 5 caractères.") @NotEmpty(message = "*S'il vous plaît fournir votre mot de passe") String password, @NotEmpty(message = "*Veuillez fournir votre prénom") String name, @NotEmpty(message = "*Veuillez fournir votre nom") String lastName, int active, Set<Role> roles, @NotNull(message = "*Veuillez choisir un formulaire") Formulaire formulaire, List<Answer> answers) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.lastName = lastName;
+        this.active = active;
+        this.roles = roles;
+        this.formulaire = formulaire;
+        this.answers = answers;
+    }
+
+    public User(@NotNull(message = "*Veuillez choisir un formulaire") Formulaire formulaire, List<Answer> answers) {
+        this.formulaire = formulaire;
+        this.answers = answers;
+    }
+
+    public User(List<Answer> answers) {
+        this.answers = answers;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 }

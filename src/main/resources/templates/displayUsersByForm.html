@@ -29,6 +29,7 @@
                     <th>Prenom</th>
                     <th>Nom</th>
                     <th>Email</th>
+                    <th>Reponses</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,6 +38,11 @@
                     <td style="text-align:center" th:text="${user.getName()}"></td>
                     <td style="text-align:center" th:text="${user.getLastName()}"></td>
                     <td style="text-align:center" th:text="${user.getEmail()}"></td>
+                    <td style="text-align:center" >
+                        <a th:href="'form/'+${formlaireUsers.id}+'/user/'+${user.id}">
+                            voir les réponses
+                        </a>
+                    </td>
 
                    <!-- <td>
                         <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette contenu ?')"

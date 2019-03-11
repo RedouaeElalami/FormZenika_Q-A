@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layoutQuestionsByForm">
+<head>
+    <title>Questions</title>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/style.css"
+          th:href="@{/css/style.css}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p></p>
+
+
+<div layout:fragment="content">
+    <div class="tableCenter">
+        <!--<form th:action="@{/forms/questions}" method="get">
+            <label>mot clé</label>
+            <input type="text" name="mc" th:value="${motCle}"/>
+            <button class="btn btn-primary">chercher</button>
+        </form>-->
+        <div class="container">
+            <h1 th:text="${formOfUser.titre}" align="center"></h1>
+
+            <table class="table table-condensed">
+                <thead>
+                <div class="col-sm-4">
+                    <div class="well">
+                        <span> Email :</span>
+                        <p th:text="${userIn.getEmail()}"></p>
+                    </div>
+                    <div class="well">
+                        <span> Nom :</span>
+                        <p th:text="${userIn.getLastName()}"></p>
+                    </div>
+                    <div class="well">
+                        <span> Prénom :</span>
+                        <p th:text="${userIn.getName()}"></p>
+                    </div>
+                    </div>
+                </div>
+                </thead>
+                <tbody>
+                <div class="info" th:each="answer,itemStat:*{answersByUser}">
+
+                    <tr th:each="question,stat:${formOfUser.questions}">
+                        <div th:if="${itemStat.index==stat.index}">
+                            <td th:text="${stat.index+1}+'- '+ ${question.contenu}"
+                                style="font-size:25px;font-family:verdana,fantasy;color:#16030e;"
+                            ></td>
+                        </div>
+                    </tr>
+
+
+                    <tr>
+                        <div class="form-group">
+                            <td th:text="*{answer.response}"
+                                style="font-size:25px;font-family:verdana,fantasy;color:#16030e;"
+                            ></td>
+
+
+                        </div>
+                    </tr>
+                </div>
+                </tbody>
+            </table>
+
+
+            <!--<ul class="nav nav-pills" >
+        <li th:class="${pageCourant}==${status.index} ? 'active':''"
+            th:each="page,status:${allPages}">
+        <a th:href="@{/forms/questions(page=${status.index},size=${size},mc=${motCle})}"
+           th:text="${status.index}"></a>
+        </li>
+    </ul>-->
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

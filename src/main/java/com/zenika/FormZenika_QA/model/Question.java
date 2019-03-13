@@ -25,10 +25,10 @@ public class Question implements Cloneable {
     private String contenu;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID_FORM", insertable = false, updatable = false)
+    @JoinColumn(name = "id_form")
     private Formulaire formulaire;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany()
     @JoinColumn( name = "question_id")
     private List<Answer> answers;
 

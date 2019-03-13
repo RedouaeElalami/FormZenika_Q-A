@@ -2,19 +2,23 @@ package com.zenika.FormZenika_QA.controller;
 
 import com.zenika.FormZenika_QA.model.Formulaire;
 import com.zenika.FormZenika_QA.model.Question;
+import com.zenika.FormZenika_QA.model.User;
 import com.zenika.FormZenika_QA.service.FormulaireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class FormulaireController {
@@ -40,8 +44,8 @@ public class FormulaireController {
     public String FormAddQuestion(Model model) {
         String title = null;
         ArrayList<Question> questions = new ArrayList<>();
-        String desciption=null;
-        Formulaire formulaire = new Formulaire(title,desciption, questions);
+        String desciption = null;
+        Formulaire formulaire = new Formulaire(title, desciption, questions);
         model.addAttribute("formulaireAttribute", formulaire);
         return "AddForm";
     }
@@ -54,6 +58,19 @@ public class FormulaireController {
         return new RedirectView("/admin/forms");
     }
 
+    @PostMapping("/admin/forms/edit/save/{idF}")
+    public RedirectView saveEditedForm(@Valid Formulaire f, BindingResult bindingResult, @PathVariable Long idF) {
+        if (bindingResult.hasErrors())
+            return new RedirectView("/admin/forms/addFormulaire");
+        Formulaire formulaireFound = formulaireService.findFormulaire(idF);
+        List<Question> questions = formulaireFound.getQuestions();
+        List<User> users = formulaireFound.getUsers();
+        f.setUsers(users);
+        f.setQuestions(questions);
+        formulaireService.save(f);
+        return new RedirectView("/admin/forms/questions/{idF}");
+    }
+
     @GetMapping("/admin/forms/edit")
     public String edit(Model model, Long id) {
         Formulaire formFound = formulaireService.findFormulaire(id);
@@ -61,6 +78,8 @@ public class FormulaireController {
         return "EditFormulaire";
     }
 
+
+    @Transactional
     @GetMapping("/admin/forms/delete")
     public RedirectView delete(Long id, String mc,
                                int page, int size) {

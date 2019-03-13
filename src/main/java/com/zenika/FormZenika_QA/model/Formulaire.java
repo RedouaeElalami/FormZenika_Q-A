@@ -17,12 +17,12 @@ public class Formulaire {
     @Lob
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ID_FORM")
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "id_form")
     private List<Question> questions;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ID_FORM")
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "id_form")
     private List<User> users;
 
     public Formulaire() {

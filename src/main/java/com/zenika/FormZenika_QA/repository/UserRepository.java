@@ -19,4 +19,5 @@ public interface UserRepository extends JpaRepository<User,Long>
     List<User> findByRolesss(@Param("x") Long id);
 */
    List<User> findByFormulaire(Formulaire formulaire);
+   void deleteByFormulaire(Formulaire formulaire);
 }

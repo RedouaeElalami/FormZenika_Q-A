@@ -1,6 +1,5 @@
 package com.zenika.FormZenika_QA.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.zenika.FormZenika_QA.model.Answer;
 import com.zenika.FormZenika_QA.model.Formulaire;
 import com.zenika.FormZenika_QA.model.User;
@@ -10,16 +9,15 @@ import com.zenika.FormZenika_QA.repository.UserRepository;
 import com.zenika.FormZenika_QA.service.FormulaireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -76,5 +74,23 @@ public class FormUsersController
 
 
         return "answerByUser";
+    }
+
+    @GetMapping("/admin/formulaire/{idForm}/reponses")
+    public String answersByFormulaire(@PathVariable Long idForm, Model model)
+    {
+        Formulaire formulaire = formulaireRepository.findById(idForm).get();
+        List<User> usersOfFormulaire = userRepository.findByFormulaire(formulaire);
+        Map<User,List<Answer>> usersAnswersMap = new HashMap<>();
+
+        for (int i =0;i<usersOfFormulaire.size();i++)
+        {
+            List<Answer> answers = answerRespository.findByUser(usersOfFormulaire.get(i));
+            usersAnswersMap.put(usersOfFormulaire.get(i),answers);
+        }
+        model.addAttribute("usersMapByFormulaire",usersAnswersMap);
+        model.addAttribute("formualaireOfUsers",formulaire);
+
+        return "answersByFormulaire";
     }
 }

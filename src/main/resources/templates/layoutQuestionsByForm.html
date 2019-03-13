@@ -27,12 +27,17 @@
                 <li><a th:href="@{/admin/forms/questions}">Visualisez tous les questions</a></li>
                 <li><a th:href="@{'/admin/forms/formQuestion/'+${idForm}}">Ajouter une question</a></li>
                 <li><a th:href="@{/admin/formsUsers}">Utilisateurs</a></li>
-                <li class="navbar-right">
-                    <a th:href="@{/login?logout}" th:inline="text">
-                        Logout
-                    </a>
-                </li>
+
             </ul>
+            <div class="container-fluid">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a th:href="@{/login?logout}" th:inline="text">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
     </div>

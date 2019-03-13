@@ -41,7 +41,7 @@ public class User {
     private Set<Role> roles;
 
     @ManyToOne
-    @JoinColumn(name = "ID_FORM")
+    @JoinColumn(name = "id_form")
     @NotNull(message = "*Veuillez choisir un formulaire")
     private Formulaire formulaire;
 

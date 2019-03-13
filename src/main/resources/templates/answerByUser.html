@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="layoutQuestionsByForm">
+      layout:decorator="layoutUsers">
 <head>
     <title>Questions</title>
     <link rel="stylesheet" type="text/css"
@@ -27,13 +27,9 @@
         <div class="container">
             <h1 th:text="${formOfUser.titre}" align="center"></h1>
 
-            <table class="table table-condensed">
+            <table class="table table-condensed" width="500">
                 <thead>
                 <div class="col-sm-4">
-                    <div class="well">
-                        <span> Email :</span>
-                        <p th:text="${userIn.getEmail()}"></p>
-                    </div>
                     <div class="well">
                         <span> Nom :</span>
                         <p th:text="${userIn.getLastName()}"></p>
@@ -42,6 +38,9 @@
                         <span> Prénom :</span>
                         <p th:text="${userIn.getName()}"></p>
                     </div>
+                    <div class="well">
+                        <span> Email :</span>
+                        <p th:text="${userIn.getEmail()}"></p>
                     </div>
                 </div>
                 </thead>
@@ -50,17 +49,18 @@
 
                     <tr th:each="question,stat:${formOfUser.questions}">
                         <div th:if="${itemStat.index==stat.index}">
-                            <td th:text="${stat.index+1}+'- '+ ${question.contenu}"
-                                style="font-size:25px;font-family:verdana,fantasy;color:#16030e;"
+                            <td  th:text="${stat.index+1}+'- '+ ${question.contenu}"
+                                style="font-size:25px;font-family:'Arial Black',fantasy;color:#16030e;
+                            white-space: pre-line"
                             ></td>
                         </div>
                     </tr>
 
-
                     <tr>
                         <div class="form-group">
-                            <td th:text="*{answer.response}"
-                                style="font-size:25px;font-family:verdana,fantasy;color:#16030e;"
+                            <td  th:text="*{answer.response}"
+                                style="font-size:25px;font-family:verdana,fantasy;color:#16030e;
+                                white-space: pre-line"
                             ></td>
 
 

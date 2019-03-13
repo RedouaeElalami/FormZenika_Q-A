@@ -29,8 +29,10 @@
 
             <blockquote class=" well">
                 <h4 style="color: #2b542c" th:text="${formul.description}"></h4>
-                <a  th:href="@{/admin/forms/edit(id=${formul.getId()})}">
-                    <button type="submit" style="float: right" class="btn btn-warning btn-sm margeBottomButton">Modifier</button>
+                <a th:href="@{/admin/forms/edit(id=${formul.getId()})}">
+                    <button type="submit" style="float: right"
+                            class="btn btn-warning btn-sm margeBottomButton">Modifier
+                    </button>
                 </a>
             </blockquote>
 
@@ -44,7 +46,7 @@
                 <tbody>
                 <tr th:each="contenu,status:${questionsForAForm}">
                     <td style="text-align:center" th:text="${status.index+1}"></td>
-                    <td style="text-align:center" th:text="${contenu.contenu}"></td>
+                    <td  th:text="${contenu.contenu}"></td>
                     <td style="text-align:center"><a
                             th:href="@{'/admin/forms/'+${idForm}+'/question/edit/'+${contenu.id}}">edit
                     </a>

@@ -81,17 +81,17 @@ public class FormZenikaQAApplication {
 
         Role userRole2 = roleRepository.findByRole("USER");
 
-        User user2 = new User("redouaneelalami20@gmail.com","12345","redouane2","elalami2",1);
+      /*  User user2 = new User("redouaneelalami20@gmail.com","12345","redouane2","elalami2",1);
         user2.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user2.setRoles(new HashSet<>(Arrays.asList(userRole2)));
         user2.setFormulaire(formulaire);
-        users.add(user2);
+        users.add(user2);*/
 
         List<Answer> answerUser = new ArrayList<>();
         List<Answer> answerUser2 = new ArrayList<>();
         List<Answer> answersUser1 = new ArrayList<>();
         user.setAnswers(answerUser2);
-        user2.setAnswers(answerUser);
+       // user2.setAnswers(answerUser);
 
         List<Question> formulaireQuestions = formulaire.getQuestions();
         int i =0;
@@ -99,7 +99,7 @@ public class FormZenikaQAApplication {
         for(Question question : formulaireQuestions)
         {
             i++;
-            answerUser.add(new Answer(String.valueOf(i),question,user2));
+        //    answerUser.add(new Answer(String.valueOf(i),question,user2));
             answerUser2.add(new Answer(String.valueOf(i+2),question,user));
 
      //    answersForOneQuestion.add(new Answer(String.valueOf(i),question,user2));
@@ -107,7 +107,7 @@ public class FormZenikaQAApplication {
         }
 
 
-        userRepository.save(user2);
+      //  userRepository.save(user2);
         userRepository.save(user);
 
        // List<Answer> answerByUser2 = answerRespository.findByUser(user2);

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="layoutFormulaire">
+      layout:decorator="layoutUsers">
 <head>
     <title>formulaires</title>
     <link rel="stylesheet" type="text/css"
@@ -10,36 +10,43 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-
-<p></p>
-
 <div layout:fragment="content">
 
     <div class="container">
         <form th:action="@{/admin/formsUsers}" method="get">
             <label>mot clé</label>
             <input type="text" name="mc" th:value="${motCleOfForm}"/>
-            <button class="btn btn-primary">chercher</button>
+            <button class="btn btn-">chercher</button>
         </form>
     </div>
-    <div class="container">
-        <h2>Formulaires</h2>
+    <div class="container-fluid">
+        <h2 align="center">Reponses des formulaires</h2>
         <table class="table">
             <thead>
             <tr>
                 <th>N°</th>
                 <th>titre</th>
+                <th>Les reponses par utilisateur</th>
+                <th>Toutes les reponses</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="formulaire,status:${formulaires}">
                 <td style="text-align:center" th:text="${status.index+1}"></td>
+                <td
+                        th:text="${formulaire.titre}">
+                </td>
+
                 <td style="text-align:center">
-                    <!--
-                                    <a th:href="@{/forms/questions(id=${formulaire.id})}"
-                    -->
-                    <a th:href="@{'/admin/forms/'+${formulaire.id}+'/users'}"
-                       th:text="${formulaire.titre}"></a>
+                    <a th:href="@{'/admin/forms/'+${formulaire.id}+'/users'}">
+                        <button type="submit" class="btn btn-info">Reponses par utilisateur</button>
+                    </a>
+                </td>
+
+                <td style="text-align:center">
+                    <a th:href="@{'/admin/formulaire/'+${formulaire.id}+'/reponses'}">
+                        <button  type="submit" class="btn btn-success">tous les réponses</button>
+                    </a>
                 </td>
             </tr>
             </tbody>

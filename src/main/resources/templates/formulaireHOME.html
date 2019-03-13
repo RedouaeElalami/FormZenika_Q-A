@@ -27,7 +27,7 @@
         <table class="table">
             <thead>
             <tr>
-                <th>ID</th>
+                <th>N</th>
                 <th>titre</th>
             </tr>
             </thead>
@@ -41,10 +41,10 @@
                     <a th:href="@{'/admin/forms/questions/'+${formulaire.id}}"
                        th:text="${formulaire.titre}"></a>
                 </td>
-                <td style="text-align:center"><a
+                <!--<td style="text-align:center"><a
                         th:href="@{/admin/forms/edit(id=${formulaire.id})}">edit
 
-                </a></td>
+                </a></td>-->
                 <td style="text-align:center">
                     <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette contenu ?')"
                        th:href="@{/admin/forms/delete(id=${formulaire.getId()},page=${pageCourantForm},

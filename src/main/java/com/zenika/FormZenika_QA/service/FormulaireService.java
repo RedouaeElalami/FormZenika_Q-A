@@ -1,6 +1,7 @@
 package com.zenika.FormZenika_QA.service;
 
 import com.zenika.FormZenika_QA.model.Formulaire;
+import com.zenika.FormZenika_QA.model.Question;
 import com.zenika.FormZenika_QA.repository.FormulaireRepository;
 import com.zenika.FormZenika_QA.repository.QuestionRepository;
 import com.zenika.FormZenika_QA.repository.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,13 +41,29 @@ public class FormulaireService {
     @Transactional
     public void delete(Long id) {
         Formulaire formulaire = formulaireRepository.findById(id).get();
-       formulaireRepository.deleteById(id);
+        formulaireRepository.deleteById(id);
         questionRepository.deleteByFormulaire(formulaire);
 
 
         userRepository.findByFormulaire(formulaire);
         userRepository.deleteByFormulaire(formulaire);
-     //   formulaireRepository.delete(formulaire);
+        //   formulaireRepository.delete(formulaire);
 
+    }
+
+    public Optional<Formulaire> findById(Long idForm) {
+        return formulaireRepository.findById(idForm);
+    }
+
+    public List<Formulaire> findAll() {
+        return formulaireRepository.findAll();
+    }
+
+    public Optional<Question> findByIdAndFormulaireId(Long idQ, Long idF) {
+        return questionRepository.findByIdAndFormulaireId(idQ, idF);
+    }
+
+    public Formulaire getOne(Long id) {
+        return formulaireRepository.getOne(id);
     }
 }

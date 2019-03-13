@@ -1,7 +1,6 @@
 package com.zenika.FormZenika_QA.wrapper;
 
 import com.zenika.FormZenika_QA.model.Answer;
-import com.zenika.FormZenika_QA.model.Question;
 
 import java.util.List;
 
@@ -33,10 +32,5 @@ public class ResponseListWrapper {
                 "answers=" + answers +
                 '}';
     }
-
-
-
-
-
 }
 

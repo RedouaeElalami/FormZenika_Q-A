@@ -21,6 +21,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     List<Question> findByFormulaire(Formulaire formulaire);
 
     Optional<Question> findByIdAndFormulaireId(Long idQues, Long idForm);
+
     void deleteByFormulaire(Formulaire formulaire);
 
 }

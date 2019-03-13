@@ -1,16 +1,16 @@
 package com.zenika.FormZenika_QA.service;
 
 import com.zenika.FormZenika_QA.model.Formulaire;
+import com.zenika.FormZenika_QA.model.Question;
 import com.zenika.FormZenika_QA.repository.FormulaireRepository;
 import com.zenika.FormZenika_QA.repository.QuestionRepository;
-import com.zenika.FormZenika_QA.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,5 +46,9 @@ public class QuestionService {
         return questionRepository
                 .findByIdAndFormulaireId(idQuestion, idForm)
                 .orElse(null);
+    }
+
+    public List<Question> findByFormulaire(Formulaire formulaire) {
+        return questionRepository.findByFormulaire(formulaire);
     }
 }

@@ -1,53 +1,46 @@
-.red
-{
+.red {
     color: red;
 }
-.spacer
-{
+
+.spacer {
     margin-top: 20px;
 }
 
 
 .areaTextStyle {
-     width: 100%;
-     height: 150px;
-     padding: 12px 20px;
-     box-sizing: border-box;
-     border: 2px solid #ccc;
-     border-radius: 4px;
-     background-color: #f8f8f8;
-     font-size: 16px;
-     resize: none;
- }
-.inputBackGroundColor
-{
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    resize: none;
+}
+
+.inputBackGroundColor {
     background-color: #74992e;
 }
 
 .tableCenter {
     margin: 80px 5px 15px 20px;
-
-/*    top margin is 10px
-    right margin is 5px
-    bottom margin is 15px
-    left margin is 20px*/
-
 }
-.margeBottomButton
-{
+
+.margeBottomButton {
     padding-bottom: -10px;
     margin-bottom: -30px;
 }
+
 table th {
     text-align: center;
 }
-.margeBottomForDescription
-{
+
+.margeBottomForDescription {
     margin-bottom: 20px;
 }
 
-.centerInMiddleOfPage
-{
+.centerInMiddleOfPage {
     height: 200px;
     width: 400px;
     background: black;
@@ -58,8 +51,8 @@ table th {
     margin-top: -100px;
     margin-left: -200px;
 }
-.buttonSize
-{
+
+.buttonSize {
     width: 50%;
     height: 50%;
 }

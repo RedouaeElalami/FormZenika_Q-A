@@ -2,15 +2,17 @@ package com.zenika.FormZenika_QA.controller;
 
 import com.zenika.FormZenika_QA.model.Formulaire;
 import com.zenika.FormZenika_QA.model.Question;
-import com.zenika.FormZenika_QA.repository.FormulaireRepository;
-import com.zenika.FormZenika_QA.repository.QuestionRepository;
+import com.zenika.FormZenika_QA.service.FormulaireService;
 import com.zenika.FormZenika_QA.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
@@ -22,10 +24,9 @@ import java.util.Optional;
 public class QuestionController {
     @Autowired
     private QuestionService questionService;
+
     @Autowired
-    private QuestionRepository questionRepository;
-    @Autowired
-    private FormulaireRepository formulaireRepository;
+    private FormulaireService formulaireService;
 
     @GetMapping("/admin/forms/questions")
     public String getallQuestions(Model model,
@@ -64,9 +65,8 @@ public class QuestionController {
     public String FormAddQuestion(Model model, @PathVariable Long id) {
 
         System.out.println("id= " + id);
-        Formulaire formulaire = formulaireRepository.findById(id).get();
+        Formulaire formulaire = formulaireService.findById(id).get();
         Question questionAdded = new Question();
-        //   formulaire.getQuestions().add(questionAdded);
         questionAdded.setFormulaire(formulaire);
         model.addAttribute("questionAttribute", questionAdded);
         System.out.println("questionAdded = " + questionAdded.getId());
@@ -87,12 +87,12 @@ public class QuestionController {
     public RedirectView save(@Valid Question q, BindingResult bindingResult, @PathVariable Long id) {
         if (bindingResult.hasErrors())
             return new RedirectView("/forms/formQuestion/{id}");
-        Formulaire formulaire = formulaireRepository.findById(id).orElse(null);
+        Formulaire formulaire = formulaireService.findById(id).orElse(null);
         if (formulaire != null) {
             formulaire.getQuestions().add(q);
         }
         System.out.println("q = " + q.getId());
-        formulaireRepository.save(formulaire);
+        formulaireService.save(formulaire);
         return new RedirectView("/admin/forms/questions/{id}");
     }
 
@@ -104,32 +104,23 @@ public class QuestionController {
             return new RedirectView("/admin/forms/formQuestion/{idF}");
 
 
-        Formulaire formulaire = formulaireRepository.findById(idF).orElse(null);
+        Formulaire formulaire = formulaireService.findById(idF).orElse(null);
         questionEdited.setFormulaire(formulaire);
-        Optional<Question> qByF = questionRepository.findByIdAndFormulaireId(idQ, idF);
+        Optional<Question> qByF = formulaireService.findByIdAndFormulaireId(idQ, idF);
         qByF.get().setContenu(questionEdited.getContenu());
-        formulaireRepository.save(formulaire);
-
-
+        formulaireService.save(formulaire);
         return new RedirectView("/admin/forms/questions/{idF}");
     }
-/*
-
-    @GetMapping("/")
-    public RedirectView home() {
-        return new RedirectView("questions");
-    }
-*/
 
 
     @GetMapping("/admin/forms/questions/{id}")
     public String getAllQuestionByFormId(Model model, @PathVariable Long id) {
-        Formulaire formulaire = formulaireRepository.findById(id).get();
+        Formulaire formulaire = formulaireService.findById(id).get();
         model.addAttribute("formul", formulaire);
         model.addAttribute("idForm", id);
         model.addAttribute("nomForm", formulaire.getTitre());
         Collection<Question> questions = formulaire.getQuestions();
-        model.addAttribute("questionsForAForm", questionRepository.findByFormulaire(formulaire));
+        model.addAttribute("questionsForAForm", questionService.findByFormulaire(formulaire));
         if (GiveAllAttributeToLayout()) return "layoutQuestionsByForm";
         if (GiveAllAttributeToLayout()) return "confirmation";
         return "questionsByForm";
@@ -137,8 +128,8 @@ public class QuestionController {
 
     @GetMapping("/admin/form/{idForm}/done")
     public String confirmSendFormulaire(@PathVariable Long idForm, Model model) {
-        Formulaire formulaire = formulaireRepository.findById(idForm).get();
-        List<Question> questionsByFormulaire = questionRepository.findByFormulaire(formulaire);
+        Formulaire formulaire = formulaireService.findById(idForm).get();
+        List<Question> questionsByFormulaire = questionService.findByFormulaire(formulaire);
         model.addAttribute("questionsByForm", questionsByFormulaire);
         return "confirmation";
     }
@@ -147,12 +138,4 @@ public class QuestionController {
         return false;
     }
 
-    @Override
-    public String toString() {
-        return "QuestionController{" +
-                "questionService=" + questionService +
-                ", questionRepository=" + questionRepository +
-                ", formulaireRepository=" + formulaireRepository +
-                '}';
-    }
 }

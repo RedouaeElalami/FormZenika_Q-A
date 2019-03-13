@@ -5,7 +5,6 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -46,7 +45,7 @@ public class User {
     private Formulaire formulaire;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn( name = "user_id")
+    @JoinColumn(name = "user_id")
     private List<Answer> answers;
 
 

@@ -54,8 +54,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/formulaire/**").permitAll()
-
-              // .antMatchers("/formulaire/{id}/**").access("@responsesQuestions.defaultAfterLogin(httpServletRequest,authentication,#id)")
                 .anyRequest().authenticated()
                 .and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")

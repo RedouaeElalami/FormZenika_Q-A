@@ -20,7 +20,7 @@ public class Answer implements Serializable {
     private Question question;
 
     @ManyToOne()
-    @JoinColumn( name = "user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Answer() {
@@ -32,7 +32,6 @@ public class Answer implements Serializable {
     }
 
 
-
     public Answer(Long id, String response) {
         this.id = id;
         this.response = response;
@@ -42,6 +41,30 @@ public class Answer implements Serializable {
     public Answer(String response, Question question) {
         this.response = response;
         this.question = question;
+    }
+
+    public Answer(String response) {
+        this.response = response;
+    }
+
+    public Answer(@NotNull @NotBlank String response, Question question, User user) {
+        this.response = response;
+        this.question = question;
+        this.user = user;
+    }
+
+    public Answer(User user) {
+        this.user = user;
+    }
+
+    public Answer(@NotNull @NotBlank String response, User user) {
+        this.response = response;
+        this.user = user;
+    }
+
+    public Answer(Question question, User user) {
+        this.question = question;
+        this.user = user;
     }
 
     public Long getId() {
@@ -68,10 +91,6 @@ public class Answer implements Serializable {
         this.question = question;
     }
 
-    public Answer(String response) {
-        this.response = response;
-    }
-
     @Override
     public String toString() {
         return "Answer{" +
@@ -81,31 +100,11 @@ public class Answer implements Serializable {
                 '}';
     }
 
-    public Answer(@NotNull @NotBlank String response, Question question, User user) {
-        this.response = response;
-        this.question = question;
-        this.user = user;
-    }
-
-    public Answer(User user) {
-        this.user = user;
-    }
-
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Answer(@NotNull @NotBlank String response, User user) {
-        this.response = response;
-        this.user = user;
-    }
-
-    public Answer(Question question, User user) {
-        this.question = question;
         this.user = user;
     }
 

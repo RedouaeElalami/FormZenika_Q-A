@@ -2,10 +2,11 @@ package com.zenika.FormZenika_QA.model;
 
 import javax.persistence.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class Formulaire {
+public class Formulaire implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id_form")

@@ -2,6 +2,7 @@ package com.zenika.FormZenika_QA.controller;
 
 import com.zenika.FormZenika_QA.model.Answer;
 import com.zenika.FormZenika_QA.model.Formulaire;
+import com.zenika.FormZenika_QA.model.Question;
 import com.zenika.FormZenika_QA.model.User;
 import com.zenika.FormZenika_QA.service.AnswerService;
 import com.zenika.FormZenika_QA.service.FormulaireService;
@@ -69,16 +70,23 @@ public class FormUsersController {
     @GetMapping("/admin/formulaire/{idForm}/reponses")
     public String answersByFormulaire(@PathVariable Long idForm, Model model) {
         Formulaire formulaire = formulaireService.findById(idForm).get();
+        List<Question> questions = formulaire.getQuestions();
+        model.addAttribute("questions",questions);
         List<User> usersOfFormulaire = userService.findByFormulaire(formulaire);
         Map<User, List<Answer>> usersAnswersMap = new HashMap<>();
 
         for (int i = 0; i < usersOfFormulaire.size(); i++) {
-            List<Answer> answers = answerService.findByUser(usersOfFormulaire.get(i));
-            usersAnswersMap.put(usersOfFormulaire.get(i), answers);
+            User user = usersOfFormulaire.get(i);
+            List<Answer> answers = answerService.findByUser(user);
+            usersAnswersMap.put(user, answers);
         }
         model.addAttribute("usersMapByFormulaire", usersAnswersMap);
         model.addAttribute("formualaireOfUsers", formulaire);
 
-        return "answersByFormulaire";
-    }
+        return "answersByFormulaire"; }
+
+
+
+
+
 }

@@ -1,19 +1,20 @@
 package com.zenika.FormZenika_QA.model;
 
-import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-@Data
 @Entity
 @Table(name = "user")
-public class User {
+@Component
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

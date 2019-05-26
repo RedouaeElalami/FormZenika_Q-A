@@ -3,12 +3,13 @@ package com.zenika.FormZenika_QA.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "questions")
-public class Question implements Cloneable {
+public class Question implements Cloneable, Serializable {
 
     @Id
     @GeneratedValue

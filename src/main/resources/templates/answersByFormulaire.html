@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:text-align="http://www.w3.org/1999/xhtml"
       layout:decorator="layoutUsers">
 <head>
     <title>Questions</title>
@@ -25,57 +25,25 @@
             <button class="btn btn-primary">chercher</button>
         </form>-->
         <div class="container-fluid">
-            <h1 th:text="${formualaireOfUsers.titre}" align="center"></h1>
 
-            <table class="table-bordered table">
-                <tr th:each="element : ${usersMapByFormulaire}">
+            <table class="table">
 
-                    <div class="col-sm-2 panel-success">
-                        <div class="panel-heading">Nom</div>
-                        <div class="well panel-body">
-                            <p style="font-size: large;color: #262626;" th:text="${element.key.getName()}">
-                            </p>
-                        </div>
-                        <div class="panel-heading">Prenom</div>
-                        <div class="well panel-body">
-                            <p style="font-size: large;color: #262626;" th:text="${element.key.getLastName()}">
-                            </p>
-                        </div>
-                        <div class="panel-heading">Email</div>
+                <caption  style="text-align: center; font-size:25px;font-family:'Arial Black',fantasy;color:#16030e;"  th:text="${formualaireOfUsers.titre}"></caption>
 
-                        <div  class="well panel-body"><a th:href="'mailto:' + ${element.key.getEmail()}">
-                            <p style="font-size: large;color: #2f5bff;" th:text="${element.key.getEmail()}"
-                            ></p>
-                        </a></div>
-                    </div>
-                    <p></p>
-
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr class="active">
-                            <th class="danger">Question</th>
-                            <th class="info">Reponse</th>
-                        </tr>
-
-                        </thead>
-                        <tbody>
-                        <tr th:each="answers : ${element.value}">
-                            <td width="300" style="white-space: pre-line;font-size:30px; font-family:'Arial Black',fantasy"
-                                th:text="${answers.getQuestion().contenu}"></td>
-                            <td width="300" style="white-space: pre-line;"
-                                th:text="${answers.response}"></td>
-
-                        </tr>
-                        </tbody>
-                    </table>
+                <tr>
+                    <th > Nom </th>
+                    <th > Prenom </th>
+                    <th > Email </th>
+                    <th th:each="q:${questions}" th:text="${q.contenu}"></th>
                 </tr>
-                <!--<ul class="nav nav-pills" >
-            <li th:class="${pageCourant}==${status.index} ? 'active':''"
-                th:each="page,status:${allPages}">
-            <a th:href="@{/forms/questions(page=${status.index},size=${size},mc=${motCle})}"
-               th:text="${status.index}"></a>
-            </li>
-        </ul>-->
+
+                <tr th:each="mapUserReponses : ${usersMapByFormulaire}">
+                    <td th:text="${mapUserReponses.key.getName()}"></td>
+                    <td th:text="${mapUserReponses.key.getLastName()}"></td>
+                    <td th:text="${mapUserReponses.key.getEmail()}"></td>
+                    <td th:each="answers:${mapUserReponses.value}" th:text="${answers.response}"></td>
+                </tr>
+
             </table>
         </div>
     </div>

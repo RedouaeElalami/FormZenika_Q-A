@@ -24,10 +24,25 @@
             <input type="text" name="mc" th:value="${motCle}"/>
             <button class="btn btn-primary">chercher</button>
         </form>-->
-        <div class="container">
-            <h1 th:text="${formOfUser.titre}" align="center"></h1>
+        <div class="container-fluid">
+            <table class="table">
+                <caption style="text-align: center; font-size:25px;font-family:'Arial Black',fantasy;color:#16030e;"
+                         th:text="${formOfUser.titre}" align="center"></caption>
+                <tr>
+                    <th > Nom </th>
+                    <th > Prenom </th>
+                    <th > Email </th>
+                    <th th:each="q:${formOfUser.questions}" th:text="${q.contenu}"></th>
+                </tr>
+                <tr >
+                    <td  th:text="${userIn.getName()}"></td>
+                    <td  th:text="${userIn.getLastName()}"></td>
+                    <td  th:text="${userIn.getEmail()}"></td>
+                    <td  th:each="answer:${answersByUser}" th:text="${answer.response}"></td>
+                </tr>
+            </table>
 
-            <table class="table table-condensed" width="500">
+            <!--<table class="table table-condensed" width="500">
                 <thead>
                 <div class="col-sm-4">
                     <div class="well">
@@ -70,7 +85,7 @@
                 </tbody>
             </table>
 
-
+-->
             <!--<ul class="nav nav-pills" >
         <li th:class="${pageCourant}==${status.index} ? 'active':''"
             th:each="page,status:${allPages}">
